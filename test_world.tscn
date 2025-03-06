@@ -64,16 +64,11 @@ uv1_triplanar_sharpness = 0.000850145
 
 [node name="Character" parent="." instance=ExtResource("1_e18vq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-Immobile = false
-DefaultReticle = ""
+CrouchSpeed = 2.0
+StrafeCoef = 0.3
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_20rw3")
-
-[node name="sun" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.87959, -0.436605, 0.188936, 0, 0.397148, 0.917755, -0.475732, -0.807248, 0.349328, 0, 0, 0)
-light_energy = 2.0
-shadow_enabled = true
 
 [node name="terrain" type="Node3D" parent="."]
 
@@ -106,3 +101,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5, 3, -15.5)
 use_collision = true
 size = Vector3(19, 8, 1)
 material = SubResource("StandardMaterial3D_7j4uu")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.908304, 0.38081, -0.173112, 0.0109866, 0.391976, 0.91991, 0.418167, -0.83746, 0.351849, -0.0519464, 6.29098, -0.0433669)
+light_angular_distance = 0.5
+shadow_enabled = true
+shadow_blur = 1.2
+directional_shadow_fade_start = 1.0
+directional_shadow_max_distance = 84.6

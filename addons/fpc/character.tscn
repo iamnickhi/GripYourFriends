@@ -1,8 +1,8 @@
-[gd_scene load_steps=22 format=3 uid="uid://cc1m2a1obsyn4"]
+[gd_scene load_steps=23 format=3 uid="uid://cc1m2a1obsyn4"]
 
-[ext_resource type="Script" path="res://src/character/controller/PlayerController.cs" id="1_uhxsm"]
-[ext_resource type="Script" path="res://src/Debug/DebugPanel.cs" id="2_p0nmk"]
-[ext_resource type="Script" path="res://addons/fpc/EditorModule.gd" id="3_v3ckk"]
+[ext_resource type="Script" uid="uid://cfia0vesk86c" path="res://src/character/controller/PlayerController.cs" id="1_uhxsm"]
+[ext_resource type="Script" uid="uid://0o3rlexunujx" path="res://src/Debug/DebugPanel.cs" id="2_p0nmk"]
+[ext_resource type="PackedScene" uid="uid://dtotvscd74o23" path="res://masterhand.tscn" id="3_bupmj"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kp17n"]
 albedo_color = Color(0.909804, 0.596078, 0, 1)
@@ -144,8 +144,8 @@ tracks/4/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_5e5t5"]
 _data = {
-"RESET": SubResource("Animation_j8cx7"),
-"crouch": SubResource("Animation_5ec5e")
+&"RESET": SubResource("Animation_j8cx7"),
+&"crouch": SubResource("Animation_5ec5e")
 }
 
 [sub_resource type="Animation" id="Animation_gh776"]
@@ -231,9 +231,9 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_o0unb"]
 _data = {
-"RESET": SubResource("Animation_gh776"),
-"sprint": SubResource("Animation_8ku67"),
-"walk": SubResource("Animation_lrqmv")
+&"RESET": SubResource("Animation_gh776"),
+&"sprint": SubResource("Animation_8ku67"),
+&"walk": SubResource("Animation_lrqmv")
 }
 
 [sub_resource type="Animation" id="Animation_fvvjq"]
@@ -365,12 +365,15 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_qeg5r"]
 _data = {
-"RESET": SubResource("Animation_fvvjq"),
-"jump": SubResource("Animation_s07ye"),
-"land_center": SubResource("Animation_3eyjl"),
-"land_left": SubResource("Animation_l1rph"),
-"land_right": SubResource("Animation_vsknp")
+&"RESET": SubResource("Animation_fvvjq"),
+&"jump": SubResource("Animation_s07ye"),
+&"land_center": SubResource("Animation_3eyjl"),
+&"land_left": SubResource("Animation_l1rph"),
+&"land_right": SubResource("Animation_vsknp")
 }
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_bupmj"]
+friction = 0.1
 
 [sub_resource type="Theme" id="Theme_wdf0f"]
 MarginContainer/constants/margin_bottom = 10
@@ -381,9 +384,8 @@ MarginContainer/constants/margin_top = 10
 [sub_resource type="SphereShape3D" id="SphereShape3D_k4wwl"]
 
 [node name="Character" type="CharacterBody3D" node_paths=PackedStringArray("Head", "Camera", "HeadbobAnimation", "JumpAnimation", "CrouchAnimation", "CollisionMesh")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+collision_layer = 2
 script = ExtResource("1_uhxsm")
-DefaultReticle = "res://addons/fpc/reticles/reticle_1.tscn"
 Head = NodePath("Head")
 Camera = NodePath("Head/Camera")
 HeadbobAnimation = NodePath("Head/HeadbobAnimation")
@@ -401,7 +403,7 @@ shape = SubResource("CapsuleShape3D_uy03j")
 
 [node name="CrouchAnimation" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_5e5t5")
+&"": SubResource("AnimationLibrary_5e5t5")
 }
 
 [node name="Head" type="Node3D" parent="."]
@@ -411,15 +413,34 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 
 [node name="HeadbobAnimation" type="AnimationPlayer" parent="Head"]
 libraries = {
-"": SubResource("AnimationLibrary_o0unb")
+&"": SubResource("AnimationLibrary_o0unb")
 }
 blend_times = [&"RESET", &"RESET", 0.5, &"RESET", &"walk", 0.5, &"walk", &"RESET", 0.5]
 
 [node name="JumpAnimation" type="AnimationPlayer" parent="Head"]
 libraries = {
-"": SubResource("AnimationLibrary_qeg5r")
+&"": SubResource("AnimationLibrary_qeg5r")
 }
 speed_scale = 4.0
+
+[node name="RightHandPos" type="Marker3D" parent="Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, -0.4, -0.6)
+
+[node name="masterhand" parent="Head/RightHandPos" instance=ExtResource("3_bupmj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.750159, 1.07119, -1.01533)
+top_level = true
+input_ray_pickable = false
+physics_material_override = SubResource("PhysicsMaterial_bupmj")
+gravity_scale = 0.0
+inertia = Vector3(0, 0, 5)
+contact_monitor = true
+max_contacts_reported = 1
+linear_damp = 26.212
+HandRotateSpeed = 0.6
+HandFollowSpeed = 9.0
+
+[node name="LeftHandPos" type="Marker3D" parent="Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4, -0.4, -0.6)
 
 [node name="UserInterface" type="Control" parent="."]
 layout_mode = 3
@@ -449,6 +470,3 @@ layout_mode = 2
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("SphereShape3D_k4wwl")
 target_position = Vector3(0, 0.5, 0)
-
-[node name="EditorModule" type="Node" parent="."]
-script = ExtResource("3_v3ckk")

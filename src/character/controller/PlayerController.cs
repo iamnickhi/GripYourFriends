@@ -40,6 +40,9 @@ public partial class PlayerController : CharacterBody3D
 	// whether the player can use movement inputs. does not stop outside forces or jumping. see jumping enabled.
 	[Export]
 	public bool Immobile { get; set; } = false;
+	// Coefficient for how much control a player has mid-air
+	[Export]
+	public float StrafeCoef { get; set; } = 0.0f;
 	// the reticle file to import at runtime. by default are in res://addons/fpc/reticles/. set to an empty string to remove.
 	[Export(PropertyHint.File)]
 	public string DefaultReticle { get; set; } = "";
@@ -204,12 +207,20 @@ public partial class PlayerController : CharacterBody3D
 	// called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+		HandleHeadRotation();
+		// Camera movement outside of physics ticks for max responsiveness
+		if (DynamicFov) // this may be changed to an animationplayer
+		{
+			UpdateCameraFov();
+		}
+
 		if (PausingEnabled)
 		{
 		HandlePausing();
 		}
 
 		UpdateDebugMenuPerFrame();
+
 	}
 
     public override void _PhysicsProcess(double delta)
@@ -227,22 +238,14 @@ public partial class PlayerController : CharacterBody3D
 
 		Vector2 InputDir = Vector2.Zero;
 
-		if (!Immobile) // immobility works by interrupting user input, so other forces can still be applied to the player
+		if (!Immobile && Controls.ContainsKey("left")) // immobility works by interrupting user input, so other forces can still be applied to the player
 			InputDir = Input.GetVector(Controls["left"], Controls["right"], Controls["forward"], Controls["backward"]);
 
 		HandleMovement(delta, InputDir);
-
-		HandleHeadRotation();
-
 		// the player is not able to stand up if the ceiling is too low
 		_lowCeiling = CrouchCeilingDetection.IsColliding();
 
 		HandleState(InputDir);
-		if (DynamicFov) // this may be changed to an animationplayer
-		{
-			UpdateCameraFov();
-		}
-
 		if (ViewBobbing)
 		{
 			PlayHeadbobAnimation(InputDir);
@@ -295,26 +298,8 @@ public partial class PlayerController : CharacterBody3D
 	public void HandleMovement(double delta, Vector2 InputDir)
 	{
 		var direction = new Vector3(InputDir.Rotated(-Head.Rotation.Y).X, 0, InputDir.Rotated(-Head.Rotation.Y).Y);
-		MoveAndSlide();
 
-		if (InAirMomentum)
-		{
-			if (IsOnFloor())
-			{
-				if (MotionSmoothing)
-				{
-					Velocity = new Vector3(
-					(float)Mathf.Lerp(Velocity.X, direction.X * _speed, Acceleration * (float) delta),
-					Velocity.Y,
-					(float)Mathf.Lerp(Velocity.Z, direction.Z * _speed, Acceleration * (float) delta));
-				}
-				else
-				{
-					Velocity = new Vector3(direction.X * (float)_speed, Velocity.Y, direction.Z * (float)_speed);
-				}
-			}
-		}
-		else
+		if (IsOnFloor())
 		{
 			if (MotionSmoothing)
 			{
@@ -328,7 +313,24 @@ public partial class PlayerController : CharacterBody3D
 				Velocity = new Vector3(direction.X * (float)_speed, Velocity.Y, direction.Z * (float)_speed);
 			}
 		}
-
+		else
+		{
+			if (StrafeCoef > 0)
+			{
+				if (MotionSmoothing)
+				{
+					Velocity = new Vector3(
+					(float)Mathf.Lerp(Velocity.X, direction.X * _speed, Acceleration * (float) delta * StrafeCoef),
+					Velocity.Y,
+					(float)Mathf.Lerp(Velocity.Z, direction.Z * _speed, Acceleration * (float) delta));
+				}
+				else
+				{
+					Velocity = new Vector3(direction.X * (float)_speed, Velocity.Y, direction.Z * (float)_speed);
+				}
+			}
+		}
+		MoveAndSlide();
 	}
 
 

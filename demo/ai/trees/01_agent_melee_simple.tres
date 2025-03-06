@@ -1,8 +1,8 @@
 [gd_resource type="BehaviorTree" load_steps=21 format=3 uid="uid://bpdm5jnegi38"]
 
-[ext_resource type="Script" path="res://demo/ai/tasks/get_first_in_group.gd" id="1_2jpsu"]
-[ext_resource type="Script" path="res://demo/ai/tasks/pursue.gd" id="2_h5db5"]
-[ext_resource type="Script" path="res://demo/ai/tasks/face_target.gd" id="3_bpmfp"]
+[ext_resource type="Script" uid="uid://c0ny6cr6ldvi6" path="res://demo/ai/tasks/get_first_in_group.gd" id="1_2jpsu"]
+[ext_resource type="Script" uid="uid://7vxml0irguom" path="res://demo/ai/tasks/pursue.gd" id="2_h5db5"]
+[ext_resource type="Script" uid="uid://nleohlingfg0" path="res://demo/ai/tasks/face_target.gd" id="3_bpmfp"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_46tbn"]
 var/speed/name = &"speed"
@@ -12,8 +12,8 @@ var/speed/hint = 1
 var/speed/hint_string = "10,1000,10"
 
 [sub_resource type="BBNode" id="BBNode_nrd4b"]
-resource_name = "AnimationPlayer"
 saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
 
 [sub_resource type="BTPlayAnimation" id="BTPlayAnimation_qiw21"]
 animation_player = SubResource("BBNode_nrd4b")
@@ -29,8 +29,8 @@ custom_name = "Pause before action"
 children = [SubResource("BTPlayAnimation_qiw21"), SubResource("BTRandomWait_xlud8")]
 
 [sub_resource type="BBNode" id="BBNode_wpj6d"]
-resource_name = "AnimationPlayer"
 saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
 
 [sub_resource type="BTPlayAnimation" id="BTPlayAnimation_olf37"]
 animation_player = SubResource("BBNode_wpj6d")
@@ -49,8 +49,8 @@ speed_var = &"speed"
 approach_distance = 100.0
 
 [sub_resource type="BTTimeLimit" id="BTTimeLimit_xek5v"]
-children = [SubResource("BTAction_a4jqi")]
 time_limit = 2.0
+children = [SubResource("BTAction_a4jqi")]
 
 [sub_resource type="BTSequence" id="BTSequence_1xfnq"]
 custom_name = "Pursue player"
@@ -64,8 +64,8 @@ target_var = &"target"
 duration = 0.1
 
 [sub_resource type="BBNode" id="BBNode_s8evu"]
-resource_name = "AnimationPlayer"
 saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
 
 [sub_resource type="BTPlayAnimation" id="BTPlayAnimation_ppmxd"]
 await_completion = 2.0

@@ -12,7 +12,7 @@ config_version=5
 
 config/name="GripYourFriends"
 run/main_scene="res://test_world.tscn"
-config/features=PackedStringArray("4.3", "C#", "Forward Plus")
+config/features=PackedStringArray("4.4", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
 [debug]
@@ -68,6 +68,19 @@ crouch={
 ]
 }
 
+[layer_names]
+
+3d_render/layer_1="Ground"
+3d_physics/layer_1="Ground"
+3d_physics/layer_2="Player"
+3d_physics/layer_3="Hand"
+
 [physics]
 
-3d/physics_engine="JoltPhysics3D"
+3d/physics_engine="Jolt Physics"
+common/physics_interpolation=true
+common/max_fps=0
+common/directional_shadow/size=4096
+common/positional_shadow/soft_shadow_filter_quality=2
+common/directional_shadow/soft_shadow_filter_quality=2
+common/sdfgi/frames_to_update_lights=2
