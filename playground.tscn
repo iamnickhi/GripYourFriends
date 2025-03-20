@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://cwmo2vt0le46p"]
+
+[ext_resource type="PackedScene" uid="uid://br73tlrq5g66b" path="res://chritinwothless/Playground.glb" id="1_rupst"]
+
+[node name="Playground" instance=ExtResource("1_rupst")]
