@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://bxjg71qqxyapo"]
+
+[ext_resource type="PackedScene" uid="uid://dn5b66lduyn7h" path="res://chritinwothless/Betterhand.glb" id="1_h8vww"]
+[ext_resource type="Script" uid="uid://c6r15na7feaao" path="res://Masterhand.cs" id="2_vniyj"]
+
+[node name="GripperRight" instance=ExtResource("1_h8vww")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0455995, 2.38419e-07, -0.035816)
+script = ExtResource("2_vniyj")

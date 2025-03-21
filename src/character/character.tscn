@@ -1,8 +1,8 @@
-[gd_scene load_steps=23 format=3 uid="uid://cc1m2a1obsyn4"]
+[gd_scene load_steps=22 format=3 uid="uid://cc1m2a1obsyn4"]
 
 [ext_resource type="Script" uid="uid://cfia0vesk86c" path="res://src/character/controller/PlayerController.cs" id="1_uhxsm"]
+[ext_resource type="PackedScene" uid="uid://bfbb863c2q4nv" path="res://gripper_right.tscn" id="2_k8eue"]
 [ext_resource type="Script" uid="uid://0o3rlexunujx" path="res://src/Debug/DebugPanel.cs" id="2_p0nmk"]
-[ext_resource type="PackedScene" uid="uid://dtotvscd74o23" path="res://masterhand.tscn" id="3_bupmj"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kp17n"]
 albedo_color = Color(0.909804, 0.596078, 0, 1)
@@ -372,9 +372,6 @@ _data = {
 &"land_right": SubResource("Animation_vsknp")
 }
 
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_bupmj"]
-friction = 0.1
-
 [sub_resource type="Theme" id="Theme_wdf0f"]
 MarginContainer/constants/margin_bottom = 10
 MarginContainer/constants/margin_left = 10
@@ -426,18 +423,9 @@ speed_scale = 4.0
 [node name="RightHandPos" type="Marker3D" parent="Head"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, -0.4, -0.6)
 
-[node name="masterhand" parent="Head/RightHandPos" instance=ExtResource("3_bupmj")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.750159, 1.07119, -1.01533)
+[node name="GripperRight" parent="Head/RightHandPos" instance=ExtResource("2_k8eue")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, 1.1, -0.6)
 top_level = true
-input_ray_pickable = false
-physics_material_override = SubResource("PhysicsMaterial_bupmj")
-gravity_scale = 0.0
-inertia = Vector3(0, 0, 5)
-contact_monitor = true
-max_contacts_reported = 1
-linear_damp = 26.212
-HandRotateSpeed = 0.6
-HandFollowSpeed = 9.0
 
 [node name="LeftHandPos" type="Marker3D" parent="Head"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4, -0.4, -0.6)

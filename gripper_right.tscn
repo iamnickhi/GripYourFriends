@@ -1,0 +1,257 @@
+[gd_scene load_steps=14 format=3 uid="uid://bfbb863c2q4nv"]
+
+[ext_resource type="PackedScene" uid="uid://dn5b66lduyn7h" path="res://chritinwothless/Betterhand.glb" id="1_hufjf"]
+[ext_resource type="Script" uid="uid://c6r15na7feaao" path="res://Masterhand.cs" id="2_imv01"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_imv01"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_imv01"]
+height = 0.885742
+radius = 0.638672
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_imv01"]
+radius = 0.230541
+height = 0.623369
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_05rra"]
+radius = 0.230541
+height = 0.738803
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_lwite"]
+radius = 0.193901
+height = 0.50342
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_gmqx4"]
+radius = 0.178914
+height = 0.45193
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7efd5"]
+radius = 0.230541
+height = 1.2013
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_da1ea"]
+radius = 0.230541
+height = 0.999984
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_cvdqm"]
+radius = 0.193901
+height = 1.14517
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ypfuq"]
+radius = 0.178914
+height = 0.823992
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_v4bnd"]
+radius = 0.349487
+height = 1.21709
+
+[node name="GripperRight" instance=ExtResource("1_hufjf")]
+collision_layer = 4
+physics_material_override = SubResource("PhysicsMaterial_imv01")
+gravity_scale = 0.0
+continuous_cd = true
+contact_monitor = true
+max_contacts_reported = 1
+linear_damp = 26.0
+angular_damp = 1.0
+script = ExtResource("2_imv01")
+HandRotateSpeed = 0.6
+HandFollowSpeed = 9.0
+
+[node name="Skeleton3D" parent="." index="0"]
+transform = Transform3D(-0.205124, 0.0530108, -0.374185, 0.376585, -0.00709669, -0.207445, -0.0317495, -0.426661, -0.0430404, 0.571834, 0.018368, 0.563122)
+bones/1/rotation = Quaternion(-2.98023e-08, 1.19209e-07, -2.52435e-29, 1)
+bones/3/rotation = Quaternion(0.0405175, 4.38997e-08, 0.0388088, 0.998425)
+bones/4/rotation = Quaternion(0.00301212, -4.53197e-08, 0.0754561, 0.997145)
+bones/6/rotation = Quaternion(0.0218211, -3.10876e-08, 0.091507, 0.995565)
+bones/7/rotation = Quaternion(0.000173937, -3.14289e-08, 0.0311323, 0.999515)
+bones/8/rotation = Quaternion(3.37212e-05, 7.16845e-08, 0.00603618, 0.999982)
+bones/10/rotation = Quaternion(0.00437596, 3.95977e-08, -0.0437616, 0.999032)
+bones/11/rotation = Quaternion(3.56554e-07, 2.1454e-08, 0.00640986, 0.999979)
+bones/12/rotation = Quaternion(1.71409e-06, 3.46967e-10, 0.0307256, 0.999528)
+bones/14/rotation = Quaternion(-0.013764, -2.54479e-08, -0.156459, 0.987589)
+bones/15/rotation = Quaternion(-1.66395e-05, -5.51375e-08, -0.00324657, 0.999995)
+bones/16/rotation = Quaternion(-0.000179325, 1.82648e-08, -0.0349936, 0.999388)
+bones/18/rotation = Quaternion(-0.0269105, -3.82377e-08, -0.0233995, 0.999364)
+bones/19/rotation = Quaternion(-0.00212609, 4.2185e-08, -0.0751867, 0.997167)
+bones/20/rotation = Quaternion(-0.00192095, 2.86734e-08, -0.0679327, 0.997688)
+
+[node name="PalmPosition" type="BoneAttachment3D" parent="Skeleton3D" index="2"]
+transform = Transform3D(1, -7.10543e-15, 2.38419e-07, -7.10543e-15, 1, 5.96046e-08, -2.38419e-07, -5.96046e-08, 1, 0, 0, 0)
+bone_name = "Bone"
+bone_idx = 1
+
+[node name="Marker3D" type="Marker3D" parent="Skeleton3D/PalmPosition" index="0"]
+transform = Transform3D(0.999999, -2.98023e-08, -1.39698e-08, 5.21541e-08, 1, 1.49012e-08, 3.47849e-07, -2.98023e-08, 1, 0.0129806, 1.23015, 0.0663194)
+
+[node name="IndexShaftPosition" type="BoneAttachment3D" parent="Skeleton3D" index="3"]
+transform = Transform3D(0.967265, 0.253713, -0.00540418, -0.253709, 0.96728, 0.00141741, 0.00558697, 7.07805e-08, 0.999984, 0.529546, 2.37911, -0.052781)
+bone_name = "Bone.008"
+bone_idx = 6
+
+[node name="Marker3D" type="Marker3D" parent="Skeleton3D/IndexShaftPosition" index="0"]
+transform = Transform3D(1, 7.45058e-08, -3.76254e-07, 1.49012e-08, 1, 2.98023e-08, -9.31323e-09, 4.47035e-08, 1, 0.00012964, 0.216145, -0.000518203)
+
+[node name="MiddleShaftPosition" type="BoneAttachment3D" parent="Skeleton3D" index="4"]
+transform = Transform3D(0.999918, 0.0128194, -5.58282e-05, -0.0128194, 0.999918, 6.37956e-07, 5.58317e-05, 7.91624e-08, 1, -0.0952758, 2.52723, -0.0111638)
+bone_name = "Bone.011"
+bone_idx = 10
+
+[node name="Marker3D" type="Marker3D" parent="Skeleton3D/MiddleShaftPosition" index="0"]
+transform = Transform3D(1, 3.72529e-09, -7.45058e-09, 1.49012e-08, 1, 2.98023e-08, -2.11876e-07, -1.49012e-08, 1, -0.0829652, 0.271621, 0.0366681)
+
+[node name="RingShaftPosition" type="BoneAttachment3D" parent="Skeleton3D" index="5"]
+transform = Transform3D(0.953837, -0.300286, -0.0048879, 0.300282, 0.953849, -0.00153885, 0.00512442, 6.70552e-08, 0.999987, -0.771143, 2.33623, 0.0340181)
+bone_name = "Bone.014"
+bone_idx = 14
+
+[node name="Marker3D" type="Marker3D" parent="Skeleton3D/RingShaftPosition" index="0"]
+transform = Transform3D(1, -8.9407e-08, -8.56817e-08, 5.36442e-07, 1, -8.9407e-08, -2.86847e-07, 4.47035e-08, 1, -0.00659883, 0.208457, 0.00179899)
+
+[node name="PinkyShaftPosition" type="BoneAttachment3D" parent="Skeleton3D" index="6"]
+transform = Transform3D(0.559249, -0.828849, -0.0158142, 0.828517, 0.559473, -0.0234285, 0.0282662, 2.6077e-08, 0.9996, -1.17616, 1.96841, 0.0722483)
+bone_name = "Bone.017"
+bone_idx = 18
+
+[node name="Marker3D" type="Marker3D" parent="Skeleton3D/PinkyShaftPosition" index="0"]
+transform = Transform3D(1, -5.96046e-08, -1.56462e-07, 5.96046e-08, 1, -8.56817e-08, 2.30968e-07, -1.11759e-08, 1, -0.000432789, 0.165534, 0.00342667)
+
+[node name="ThumbShaftPosition" type="BoneAttachment3D" parent="Skeleton3D" index="7"]
+transform = Transform3D(0.502493, 0.864348, -0.020059, -0.863661, 0.502893, 0.0344763, 0.039887, 5.21541e-08, 0.999204, 1.03994, 1.7519, -0.0898945)
+bone_name = "Bone.006"
+bone_idx = 3
+
+[node name="Marker3D" type="Marker3D" parent="Skeleton3D/ThumbShaftPosition" index="0"]
+transform = Transform3D(1, 2.98023e-08, 0, 0, 1, -7.45058e-09, -7.45058e-09, 0, 1, -0.00962162, 0.390039, 0.0104381)
+
+[node name="IndexTipPosition" type="BoneAttachment3D" parent="Skeleton3D" index="8"]
+transform = Transform3D(0.981179, 0.193022, -0.00548198, -0.193019, 0.981194, 0.00107835, 0.00558703, 6.75791e-08, 0.999984, 0.642937, 2.81141, -0.052781)
+bone_name = "Bone.009"
+bone_idx = 7
+
+[node name="Marker3D" type="Marker3D" parent="Skeleton3D/IndexTipPosition" index="0"]
+transform = Transform3D(1, -2.38419e-07, 1.73226e-07, 1.78814e-07, 0.999998, -1.49012e-07, -6.51926e-09, -1.63913e-07, 1, 0.00351676, 0.407703, -0.00187302)
+
+[node name="MiddleTipPosition" type="BoneAttachment3D" parent="Skeleton3D" index="9"]
+transform = Transform3D(1, -1.95976e-08, -5.57899e-05, 3.07336e-08, 1, -7.54119e-08, 5.57898e-05, 7.67918e-08, 1, -0.0881889, 3.08001, -0.0111638)
+bone_name = "Bone.012"
+bone_idx = 11
+
+[node name="Marker3D" type="Marker3D" parent="Skeleton3D/MiddleTipPosition" index="0"]
+transform = Transform3D(1, -7.45058e-09, 2.03494e-07, -3.72529e-08, 1, 0, 5.40167e-08, 0, 1, 0.00498247, 0.459276, 0.0083636)
+
+[node name="RingTipPosition" type="BoneAttachment3D" parent="Skeleton3D" index="10"]
+transform = Transform3D(0.955766, -0.294086, -0.00489789, 0.294082, 0.955779, -0.00150711, 0.00512452, 6.23477e-08, 0.999986, -0.89162, 2.71892, 0.0340181)
+bone_name = "Bone.015"
+bone_idx = 15
+
+[node name="Marker3D" type="Marker3D" parent="Skeleton3D/RingTipPosition" index="0"]
+transform = Transform3D(0.999999, 4.47035e-07, -1.11759e-07, -8.9407e-08, 0.999998, -2.23517e-08, -1.45286e-07, 1.2666e-07, 0.999998, 0.000183463, 0.370835, -0.000922203)
+
+[node name="PinkyTipPosition" type="BoneAttachment3D" parent="Skeleton3D" index="11"]
+transform = Transform3D(0.677205, -0.735545, -0.0191496, 0.735251, 0.677476, -0.0207911, 0.0282661, 3.86499e-08, 0.9996, -1.45964, 2.15976, 0.0722483)
+bone_name = "Bone.018"
+bone_idx = 19
+
+[node name="Marker3D" type="Marker3D" parent="Skeleton3D/PinkyTipPosition" index="0"]
+transform = Transform3D(1, 2.98023e-08, -4.09782e-08, 2.68221e-07, 1, -8.53091e-07, -2.6077e-08, 5.58794e-08, 1, 0.0100279, 0.401614, -0.0058589)
+
+[node name="IndexBasePosition" type="BoneAttachment3D" parent="Skeleton3D" index="12"]
+transform = Transform3D(0.904817, 0.425695, 0.00948731, -0.425695, 0.903871, 0.0424298, 0.00948682, -0.0424299, 0.999054, -8.9154e-15, 1.25473, -7.47878e-08)
+bone_name = "Bone.002"
+bone_idx = 5
+
+[node name="Marker3D" type="Marker3D" parent="Skeleton3D/IndexBasePosition" index="0"]
+transform = Transform3D(1, -1.78814e-07, 7.45058e-09, 0, 1, 1.49012e-08, 0, 2.98023e-08, 1, -0.0347764, 0.714676, -0.00360715)
+
+[node name="MiddleBasePosition" type="BoneAttachment3D" parent="Skeleton3D" index="13"]
+transform = Transform3D(0.997209, -0.0746611, -0.000326786, 0.0746611, 0.99717, 0.00874828, -0.000327295, -0.00874826, 0.999962, -8.9154e-15, 1.25473, -7.47878e-08)
+bone_name = "Bone.003"
+bone_idx = 9
+
+[node name="Marker3D" type="Marker3D" parent="Skeleton3D/MiddleBasePosition" index="0"]
+transform = Transform3D(1, 0, -1.86265e-08, 0, 1, 0, 9.31323e-09, -7.45058e-09, 1, -0.0905834, 0.684627, 0.0294042)
+
+[node name="RingBasePosition" type="BoneAttachment3D" parent="Skeleton3D" index="14"]
+transform = Transform3D(0.814318, -0.580372, 0.00738588, 0.580346, 0.813949, -0.0261766, 0.00918046, 0.0256025, 0.99963, -8.9154e-15, 1.25473, -7.47878e-08)
+bone_name = "Bone.004"
+bone_idx = 13
+
+[node name="Marker3D" type="Marker3D" parent="Skeleton3D/RingBasePosition" index="0"]
+transform = Transform3D(1, -4.76837e-07, 2.94298e-07, -2.98023e-07, 0.999998, 3.83705e-07, -1.41561e-07, 3.01749e-07, 0.999998, 0.0423237, 0.76601, 0.0602039)
+
+[node name="PinkyBasePosition" type="BoneAttachment3D" parent="Skeleton3D" index="15"]
+transform = Transform3D(0.519852, -0.853747, 0.0294941, 0.853747, 0.51804, -0.0524432, 0.0294941, 0.0524432, 0.998188, -8.9154e-15, 1.25473, -7.47878e-08)
+bone_name = "Bone.005"
+bone_idx = 17
+
+[node name="Marker3D" type="Marker3D" parent="Skeleton3D/PinkyBasePosition" index="0"]
+transform = Transform3D(1, 8.9407e-08, -1.49012e-08, -5.06639e-07, 1, 8.19564e-08, -4.65661e-07, 1.58325e-07, 1, 0.0215015, 0.74108, 0.0427172)
+
+[node name="ThumbBasePosition" type="BoneAttachment3D" parent="Skeleton3D" index="16"]
+transform = Transform3D(0.433934, 0.899471, 0.0515192, -0.899922, 0.430008, 0.0723348, 0.0429093, -0.0777518, 0.996049, -8.9154e-15, 1.25473, -7.47878e-08)
+bone_name = "Bone.001"
+bone_idx = 2
+
+[node name="Marker3D" type="Marker3D" parent="Skeleton3D/ThumbBasePosition" index="0"]
+transform = Transform3D(1, 0, -1.49012e-08, -2.98023e-08, 0.999999, 3.05474e-07, 0, -5.66244e-07, 1, 0.00281256, 0.493939, 0.0182358)
+
+[node name="PalmCollision" type="CollisionShape3D" parent="." index="2"]
+transform = Transform3D(-0.205124, 0.0530109, -0.374185, 0.376585, -0.00709664, -0.207445, -0.0317495, -0.426662, -0.0430406, 0.596935, 0.00245968, 0.136662)
+shape = SubResource("CylinderShape3D_imv01")
+
+[node name="IndexShaftCollision" type="CollisionShape3D" parent="." index="3"]
+transform = Transform3D(-0.213949, -0.000766258, -0.372995, 0.364899, 0.0886799, -0.209487, 0.077297, -0.420756, -0.0434729, 0.609079, 0.231176, -0.557403)
+shape = SubResource("CapsuleShape3D_imv01")
+
+[node name="MiddleShaftCollision" type="CollisionShape3D" parent="." index="4"]
+transform = Transform3D(-0.205807, 0.0503768, -0.374173, 0.376634, -0.00226851, -0.207466, -0.0262798, -0.427033, -0.0430389, 0.746563, -0.0726016, -0.627032)
+shape = SubResource("CapsuleShape3D_05rra")
+
+[node name="RingShaftCollision" type="CollisionShape3D" parent="." index="5"]
+transform = Transform3D(-0.181654, 0.11216, -0.373259, 0.356006, -0.119852, -0.209272, -0.158623, -0.397436, -0.042228, 0.865037, -0.323379, -0.492514)
+shape = SubResource("CapsuleShape3D_lwite")
+
+[node name="PinkyShaftCollision" type="CollisionShape3D" parent="." index="6"]
+transform = Transform3D(-0.0813717, 0.199675, -0.372033, 0.198861, -0.316102, -0.213151, -0.372469, -0.212389, -0.032525, 0.922219, -0.506656, -0.277596)
+shape = SubResource("CapsuleShape3D_gmqx4")
+
+[node name="ThumbShaftCollision" type="CollisionShape3D" parent="." index="7"]
+transform = Transform3D(-0.163782, -0.15064, -0.367945, 0.187086, 0.321932, -0.215078, 0.350819, -0.242008, -0.0570789, 0.440765, 0.577327, -0.33344)
+shape = SubResource("CapsuleShape3D_7efd5")
+
+[node name="IndexTipCollision" type="CollisionShape3D" parent="." index="8"]
+transform = Transform3D(-0.213586, 0.0124206, -0.372997, 0.369708, 0.0657257, -0.209514, 0.0509611, -0.424765, -0.0433257, 0.613748, 0.288553, -0.888833)
+shape = SubResource("CapsuleShape3D_da1ea")
+
+[node name="MiddleTipCollision" type="CollisionShape3D" parent="." index="9"]
+transform = Transform3D(-0.205144, 0.0530107, -0.374173, 0.376573, -0.00709671, -0.207466, -0.0317519, -0.426661, -0.0430386, 0.795211, -0.0712054, -0.94419)
+shape = SubResource("CapsuleShape3D_05rra")
+
+[node name="RingTipCollision" type="CollisionShape3D" parent="." index="10"]
+transform = Transform3D(-0.182378, 0.11099, -0.373254, 0.356777, -0.117531, -0.209275, -0.156039, -0.398456, -0.0422412, 0.964024, -0.401909, -0.82131)
+shape = SubResource("CapsuleShape3D_cvdqm")
+
+[node name="PinkyTipCollision" type="CollisionShape3D" parent="." index="11"]
+transform = Transform3D(-0.110511, 0.186791, -0.371209, 0.243944, -0.281803, -0.214426, -0.33642, -0.265699, -0.0335442, 1.03478, -0.671099, -0.425014)
+shape = SubResource("CapsuleShape3D_ypfuq")
+
+[node name="IndexBaseCollision" type="CollisionShape3D" parent="." index="12"]
+transform = Transform3D(-0.211716, -0.0235285, -0.373528, 0.341794, 0.162698, -0.203977, 0.152491, -0.397336, -0.061404, 0.630243, 0.114589, -0.261271)
+shape = SubResource("CapsuleShape3D_v4bnd")
+
+[node name="MiddleBaseCollision" type="CollisionShape3D" parent="." index="13"]
+transform = Transform3D(-0.200471, 0.071449, -0.37364, 0.375072, -0.0333781, -0.207622, -0.0635018, -0.422707, -0.0467609, 0.694437, -0.0534682, -0.257242)
+shape = SubResource("CapsuleShape3D_v4bnd")
+
+[node name="RingBaseCollision" type="CollisionShape3D" parent="." index="14"]
+transform = Transform3D(-0.139706, 0.152616, -0.376948, 0.300637, -0.229647, -0.204401, -0.27386, -0.329955, -0.0320906, 0.726647, -0.16603, -0.238495)
+shape = SubResource("CapsuleShape3D_v4bnd")
+
+[node name="PinkyBaseCollision" type="CollisionShape3D" parent="." index="15"]
+transform = Transform3D(-0.0724124, 0.182962, -0.382337, 0.183592, -0.336064, -0.19559, -0.382036, -0.196179, -0.0215234, 0.756048, -0.243994, -0.126741)
+shape = SubResource("CapsuleShape3D_v4bnd")
+
+[node name="ThumbBaseCollision" type="CollisionShape3D" parent="." index="16"]
+transform = Transform3D(-0.152772, -0.132614, -0.37944, 0.160898, 0.351805, -0.187737, 0.368338, -0.208679, -0.0753687, 0.54797, 0.180351, -0.0980102)
+shape = SubResource("CapsuleShape3D_v4bnd")

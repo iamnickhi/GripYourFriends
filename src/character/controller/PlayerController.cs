@@ -6,6 +6,7 @@ using Godot;
 using System;
 using Debug;
 using System.Runtime.Serialization;
+using Gripper;
 namespace player;
 
 public partial class PlayerController : CharacterBody3D
@@ -87,7 +88,9 @@ public partial class PlayerController : CharacterBody3D
 		["jump"] = "ui_accept",
 		["crouch"] = "crouch",
 		["sprint"] = "sprint",
-		["pause"] = "ui_cancel"
+		["pause"] = "ui_cancel",
+		["grab_rh"] = "grab_rh",
+		["grab_lh"] = "grab_lh"
 		};
 	[ExportSubgroup("controller specific")]
 	// this only affects how the camera is handled, the rest should be covered by adding controller inputs to the existing actions in the input map.
@@ -175,6 +178,7 @@ public partial class PlayerController : CharacterBody3D
 	public ShapeCast3D CrouchCeilingDetection;
 	public Control UserInterface;
 	public DebugPanel DebugPanel = new DebugPanel();
+	private Masterhand RightGripper;
 
 
 	// called when the node enters the scene tree for the first time.
@@ -183,6 +187,7 @@ public partial class PlayerController : CharacterBody3D
 		CrouchCeilingDetection = GetNode<ShapeCast3D>("CrouchCeilingDetection");
 		UserInterface = GetNode<Control>("UserInterface");
 		Head = GetNode<Node3D>("Head");
+		RightGripper = GetNode<Masterhand>("Head/RightHandPos/GripperRight");
 #endregion
 
 #region main control flow
@@ -254,6 +259,15 @@ public partial class PlayerController : CharacterBody3D
 		if (JumpAnimation.IsNodeReady())
 		{
 			PlayJumpAnimation();
+		}
+
+		if (Input.IsActionJustPressed(Controls["grab_rh"]))
+		{
+			RightGripper.Grab();
+		}
+		if (Input.IsActionJustReleased(Controls["grab_rh"]))
+		{
+			RightGripper.UnGrab();
 		}
 
 		UpdateDebugMenuPerTick();
