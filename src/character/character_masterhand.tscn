@@ -1,8 +1,9 @@
-[gd_scene load_steps=23 format=3 uid="uid://glktf4x0mmca"]
+[gd_scene load_steps=24 format=3 uid="uid://glktf4x0mmca"]
 
 [ext_resource type="Script" uid="uid://cfia0vesk86c" path="res://src/character/controller/PlayerController.cs" id="1_sx547"]
 [ext_resource type="PackedScene" uid="uid://dtotvscd74o23" path="res://masterhand.tscn" id="2_onb2k"]
 [ext_resource type="Script" uid="uid://0o3rlexunujx" path="res://src/Debug/DebugPanel.cs" id="3_npwvi"]
+[ext_resource type="PackedScene" uid="uid://4bkbsxqt20o2" path="res://chritinwothless/Betterhand2.glb" id="3_onb2k"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kp17n"]
 albedo_color = Color(0.909804, 0.596078, 0, 1)
@@ -410,6 +411,7 @@ libraries = {
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 
 [node name="Camera" type="Camera3D" parent="Head"]
+current = true
 
 [node name="HeadbobAnimation" type="AnimationPlayer" parent="Head"]
 libraries = {
@@ -442,6 +444,8 @@ HandFollowSpeed = 9.0
 
 [node name="LeftHandPos" type="Marker3D" parent="Head"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4, -0.4, -0.6)
+
+[node name="GripperLeft" parent="Head/LeftHandPos" instance=ExtResource("3_onb2k")]
 
 [node name="UserInterface" type="Control" parent="."]
 layout_mode = 3

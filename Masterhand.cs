@@ -110,7 +110,6 @@ public partial class Masterhand : RigidBody3D
 		Vector3 targetDir = (TargetPosNode.GlobalBasis * forwardLocalAxis).Normalized();
 		float localSpeed = Mathf.Clamp(HandRotateSpeed, 0.0f, 0.75f * Mathf.Acos(forwardDir.Dot(targetDir)));
 		if (IsColliding) localSpeed /= 5;
-		GD.Print(localSpeed);
         if (forwardDir.Dot(targetDir) > 1e-4)
         {
             AngularVelocity = forwardDir.Cross(targetDir) * localSpeed / state.Step;

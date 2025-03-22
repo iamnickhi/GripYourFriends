@@ -1,8 +1,9 @@
-[gd_scene load_steps=22 format=3 uid="uid://cc1m2a1obsyn4"]
+[gd_scene load_steps=23 format=3 uid="uid://cc1m2a1obsyn4"]
 
 [ext_resource type="Script" uid="uid://cfia0vesk86c" path="res://src/character/controller/PlayerController.cs" id="1_uhxsm"]
 [ext_resource type="PackedScene" uid="uid://bfbb863c2q4nv" path="res://gripper_right.tscn" id="2_k8eue"]
 [ext_resource type="Script" uid="uid://0o3rlexunujx" path="res://src/Debug/DebugPanel.cs" id="2_p0nmk"]
+[ext_resource type="PackedScene" uid="uid://cmn7oq3b74xbf" path="res://gripper_left.tscn" id="3_k8eue"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kp17n"]
 albedo_color = Color(0.909804, 0.596078, 0, 1)
@@ -407,6 +408,7 @@ libraries = {
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 
 [node name="Camera" type="Camera3D" parent="Head"]
+current = true
 
 [node name="HeadbobAnimation" type="AnimationPlayer" parent="Head"]
 libraries = {
@@ -424,11 +426,13 @@ speed_scale = 4.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, -0.4, -0.6)
 
 [node name="GripperRight" parent="Head/RightHandPos" instance=ExtResource("2_k8eue")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, 1.1, -0.6)
 top_level = true
 
 [node name="LeftHandPos" type="Marker3D" parent="Head"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4, -0.4, -0.6)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, -0.4, -0.6)
+
+[node name="GripperLeft" parent="Head/LeftHandPos" instance=ExtResource("3_k8eue")]
+top_level = true
 
 [node name="UserInterface" type="Control" parent="."]
 layout_mode = 3

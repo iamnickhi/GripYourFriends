@@ -179,6 +179,7 @@ public partial class PlayerController : CharacterBody3D
 	public Control UserInterface;
 	public DebugPanel DebugPanel = new DebugPanel();
 	private Masterhand RightGripper;
+	private Masterhand LeftGripper;
 
 
 	// called when the node enters the scene tree for the first time.
@@ -188,6 +189,7 @@ public partial class PlayerController : CharacterBody3D
 		UserInterface = GetNode<Control>("UserInterface");
 		Head = GetNode<Node3D>("Head");
 		RightGripper = GetNode<Masterhand>("Head/RightHandPos/GripperRight");
+		LeftGripper = GetNode<Masterhand>("Head/LeftHandPos/GripperLeft");
 #endregion
 
 #region main control flow
@@ -263,11 +265,24 @@ public partial class PlayerController : CharacterBody3D
 
 		if (Input.IsActionJustPressed(Controls["grab_rh"]))
 		{
+			GD.Print("Grab Right");
 			RightGripper.Grab();
 		}
 		if (Input.IsActionJustReleased(Controls["grab_rh"]))
 		{
+			GD.Print("UnGrab Right");
 			RightGripper.UnGrab();
+		}
+	
+		if (Input.IsActionJustPressed(Controls["grab_lh"]))
+		{
+			GD.Print("Grab Left");
+			LeftGripper.Grab();
+		}
+		if (Input.IsActionJustReleased(Controls["grab_lh"]))
+		{
+			GD.Print("UnGrab Left");
+			LeftGripper.UnGrab();
 		}
 
 		UpdateDebugMenuPerTick();
