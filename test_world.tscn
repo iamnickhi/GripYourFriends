@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://cpr5b33fva3v4"]
+[gd_scene load_steps=22 format=3 uid="uid://cpr5b33fva3v4"]
 
 [ext_resource type="PackedScene" uid="uid://cc1m2a1obsyn4" path="res://src/character/character.tscn" id="1_e18vq"]
 [ext_resource type="Texture2D" uid="uid://pe7a4weirj2g" path="res://textures/dark.png" id="2_08fdt"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://dawdqvi3joiik" path="res://chritinwothless/LilyPad.glb" id="8_uu1iw"]
 [ext_resource type="PackedScene" uid="uid://daflaxcxwq2et" path="res://chritinwothless/CatTail.glb" id="9_4tg7h"]
 [ext_resource type="PackedScene" uid="uid://bybhyf2wkekyu" path="res://chritinwothless/Mushroom.glb" id="10_ud3vi"]
+[ext_resource type="PackedScene" uid="uid://cc6n7abc276h1" path="res://chritinwothless/Crate.glb" id="11_5457m"]
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_edcox"]
 ground_color = Color(0.160784, 0.815686, 0.905882, 1)
@@ -143,3 +144,6 @@ transform = Transform3D(0.359036, 0, 0.933324, 0, 1, 0, -0.933324, 0, 0.359036, 
 
 [node name="Mushroom2" parent="." instance=ExtResource("10_ud3vi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44.486, 24.557, -30.9108)
+
+[node name="Crate" parent="." instance=ExtResource("11_5457m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -61.0044, 24.8064, -3.36746)
