@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://c6r15na7feaao" path="res://Masterhand.cs" id="2_qqrex"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_t27h5"]
+friction = 0.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2y5th"]
 resource_name = "Skin"
@@ -386,8 +387,6 @@ max_contacts_reported = 1
 linear_damp = 26.0
 angular_damp = 1.0
 script = ExtResource("2_qqrex")
-HandRotateSpeed = 0.6
-HandFollowSpeed = 9.0
 
 [node name="Skeleton3D" type="Skeleton3D" parent="."]
 transform = Transform3D(-0.214182, 0.037477, 0.370974, -0.372391, 1.62777e-08, -0.215, -0.0187385, -0.428364, 0.032456, -0.58, 0, 0.56)
@@ -548,7 +547,7 @@ mesh = SubResource("ArrayMesh_5i30w")
 skin = SubResource("Skin_wa6m4")
 
 [node name="PalmPosition" type="BoneAttachment3D" parent="Skeleton3D"]
-transform = Transform3D(1, 7.10543e-15, -2.38419e-07, 7.10543e-15, 1, 5.96046e-08, 2.38419e-07, -5.96046e-08, 1, 0, 0, 0)
+transform = Transform3D(1, 7.1054e-15, -2.38418e-07, 7.1054e-15, 1, 5.96046e-08, 2.38418e-07, -5.96046e-08, 1, 0, 0, 0)
 bone_name = "Bone"
 bone_idx = 1
 
@@ -556,7 +555,7 @@ bone_idx = 1
 transform = Transform3D(0.999999, -2.98023e-08, -1.39698e-08, 5.21541e-08, 1, 1.49012e-08, 3.47849e-07, -2.98023e-08, 1, 0.0129806, 1.23015, 0.0663194)
 
 [node name="IndexShaftPosition" type="BoneAttachment3D" parent="Skeleton3D"]
-transform = Transform3D(0.966835, -0.253713, 0.0293122, 0.253596, 0.96728, 0.00768837, -0.0303037, 6.33299e-08, 0.999541, -0.529546, 2.37911, -0.052781)
+transform = Transform3D(0.966835, -0.253713, 0.0293122, 0.253596, 0.96728, 0.00768829, -0.0303037, 1.56462e-07, 0.999541, -0.529547, 2.37911, -0.0527811)
 bone_name = "Bone.008"
 bone_idx = 6
 
@@ -564,7 +563,7 @@ bone_idx = 6
 transform = Transform3D(1, 7.45058e-08, -3.76254e-07, 1.49012e-08, 1, 2.98023e-08, -9.31323e-09, 4.47035e-08, 1, 0.00012964, 0.216145, -0.000518203)
 
 [node name="MiddleShaftPosition" type="BoneAttachment3D" parent="Skeleton3D"]
-transform = Transform3D(0.999917, -0.0128194, -0.00135666, 0.0128194, 0.999918, -1.74688e-05, 0.00135677, 7.54371e-08, 0.999999, 0.0952758, 2.52723, -0.0111638)
+transform = Transform3D(0.999917, -0.0128195, -0.00135666, 0.0128195, 0.999918, -1.74744e-05, 0.00135677, 8.10251e-08, 0.999999, 0.0952757, 2.52723, -0.0111638)
 bone_name = "Bone.011"
 bone_idx = 10
 
@@ -572,7 +571,7 @@ bone_idx = 10
 transform = Transform3D(1, 3.72529e-09, -7.45058e-09, 1.49012e-08, 1, 2.98023e-08, -2.11876e-07, -1.49012e-08, 1, -0.0829652, 0.271621, 0.0366681)
 
 [node name="RingShaftPosition" type="BoneAttachment3D" parent="Skeleton3D"]
-transform = Transform3D(0.953557, 0.300286, 0.0236094, -0.300194, 0.953849, -0.00743267, -0.0247517, 8.56817e-08, 0.999694, 0.771143, 2.33623, 0.0340181)
+transform = Transform3D(0.953557, 0.300284, 0.0236094, -0.300192, 0.95385, -0.00743254, -0.0247517, 3.72529e-09, 0.999694, 0.771145, 2.33623, 0.0340182)
 bone_name = "Bone.014"
 bone_idx = 14
 
@@ -580,7 +579,7 @@ bone_idx = 14
 transform = Transform3D(1, -8.9407e-08, -8.56817e-08, 5.36442e-07, 1, -8.9407e-08, -2.86847e-07, 4.47035e-08, 1, -0.00659883, 0.208457, 0.00179899)
 
 [node name="PinkyShaftPosition" type="BoneAttachment3D" parent="Skeleton3D"]
-transform = Transform3D(0.558418, 0.828849, 0.03434, -0.827286, 0.559473, -0.0508741, -0.0613792, 1.49012e-08, 0.998114, 1.17616, 1.96841, 0.0722483)
+transform = Transform3D(0.558419, 0.828848, 0.03434, -0.827286, 0.559474, -0.0508742, -0.0613793, 7.45058e-08, 0.998115, 1.17616, 1.96841, 0.0722484)
 bone_name = "Bone.017"
 bone_idx = 18
 
@@ -588,7 +587,7 @@ bone_idx = 18
 transform = Transform3D(1, -5.96046e-08, -1.56462e-07, 5.96046e-08, 1, -8.56817e-08, 2.30968e-07, -1.11759e-08, 1, -0.000432789, 0.165534, 0.00342667)
 
 [node name="ThumbShaftPosition" type="BoneAttachment3D" parent="Skeleton3D"]
-transform = Transform3D(0.500821, -0.864348, 0.045607, 0.860787, 0.502893, 0.0783871, -0.0906892, 3.72529e-08, 0.995879, -1.03994, 1.75189, -0.0898945)
+transform = Transform3D(0.500821, -0.864349, 0.0456071, 0.860787, 0.502893, 0.0783872, -0.0906893, 1.19209e-07, 0.995879, -1.03994, 1.75189, -0.0898943)
 bone_name = "Bone.006"
 bone_idx = 3
 
@@ -596,7 +595,7 @@ bone_idx = 3
 transform = Transform3D(1, 2.98023e-08, 0, 0, 1, -7.45058e-09, -7.45058e-09, 0, 1, -0.00962162, 0.390039, 0.0104381)
 
 [node name="IndexTipPosition" type="BoneAttachment3D" parent="Skeleton3D"]
-transform = Transform3D(0.980745, -0.193022, 0.029708, 0.192933, 0.981194, 0.00584412, -0.0302774, 7.17118e-08, 0.999541, -0.642937, 2.81141, -0.052781)
+transform = Transform3D(0.980745, -0.193022, 0.0297081, 0.192933, 0.981194, 0.00584404, -0.0302774, 1.62167e-07, 0.999542, -0.642938, 2.81141, -0.052781)
 bone_name = "Bone.009"
 bone_idx = 7
 
@@ -604,7 +603,7 @@ bone_idx = 7
 transform = Transform3D(1, -2.38419e-07, 1.73226e-07, 1.78814e-07, 0.999998, -1.49012e-07, -6.51926e-09, -1.63913e-07, 1, 0.00351676, 0.407703, -0.00187302)
 
 [node name="MiddleTipPosition" type="BoneAttachment3D" parent="Skeleton3D"]
-transform = Transform3D(0.999999, 3.19792e-08, -0.0013566, -2.23508e-08, 1, -7.5197e-08, 0.0013566, 7.49296e-08, 0.999999, 0.0881889, 3.08001, -0.0111638)
+transform = Transform3D(0.999999, -4.15953e-08, -0.00135661, 4.28418e-08, 1, -8.07759e-08, 0.00135661, 8.05248e-08, 0.999999, 0.0881887, 3.08001, -0.0111638)
 bone_name = "Bone.012"
 bone_idx = 11
 
@@ -612,7 +611,7 @@ bone_idx = 11
 transform = Transform3D(1, -7.45058e-09, 2.03494e-07, -3.72529e-08, 1, 0, 5.40167e-08, 0, 1, 0.00498247, 0.459276, 0.0083636)
 
 [node name="RingTipPosition" type="BoneAttachment3D" parent="Skeleton3D"]
-transform = Transform3D(0.955486, 0.294086, 0.0236568, -0.293996, 0.955779, -0.00727911, -0.0247514, 8.10105e-08, 0.999693, 0.89162, 2.71892, 0.0340181)
+transform = Transform3D(0.955487, 0.294084, 0.0236569, -0.293994, 0.955779, -0.00727899, -0.0247514, -1.26602e-09, 0.999694, 0.891622, 2.71893, 0.0340182)
 bone_name = "Bone.015"
 bone_idx = 15
 
@@ -620,7 +619,7 @@ bone_idx = 15
 transform = Transform3D(0.999999, 4.47035e-07, -1.11759e-07, -8.9407e-08, 0.999998, -2.23517e-08, -1.45286e-07, 1.2666e-07, 0.999998, 0.000183463, 0.370835, -0.000922203)
 
 [node name="PinkyTipPosition" type="BoneAttachment3D" parent="Skeleton3D"]
-transform = Transform3D(0.676188, 0.735545, 0.0417572, -0.734147, 0.677476, -0.0453365, -0.0616366, 2.42144e-08, 0.998098, 1.45964, 2.15976, 0.0722483)
+transform = Transform3D(0.676188, 0.735545, 0.0417573, -0.734146, 0.677476, -0.0453365, -0.0616366, 8.56817e-08, 0.998099, 1.45964, 2.15976, 0.0722484)
 bone_name = "Bone.018"
 bone_idx = 19
 
@@ -628,7 +627,7 @@ bone_idx = 19
 transform = Transform3D(1, 2.98023e-08, -4.09782e-08, 2.68221e-07, 1, -8.53091e-07, -2.6077e-08, 5.58794e-08, 1, 0.0100279, 0.401614, -0.0058589)
 
 [node name="IndexBasePosition" type="BoneAttachment3D" parent="Skeleton3D"]
-transform = Transform3D(0.904847, -0.425695, 0.00604861, 0.424904, 0.903871, 0.0497321, -0.0266379, -0.0424299, 0.998744, 8.9154e-15, 1.25473, -7.47878e-08)
+transform = Transform3D(0.904847, -0.425695, 0.00604863, 0.424904, 0.903871, 0.0497321, -0.0266379, -0.0424298, 0.998744, 8.91536e-15, 1.25473, -7.47877e-08)
 bone_name = "Bone.002"
 bone_idx = 5
 
@@ -636,7 +635,7 @@ bone_idx = 5
 transform = Transform3D(1, -1.78814e-07, 7.45058e-09, 0, 1, 1.49012e-08, 0, 2.98023e-08, 1, -0.0347764, 0.714676, -0.00360715)
 
 [node name="MiddleBasePosition" type="BoneAttachment3D" parent="Skeleton3D"]
-transform = Transform3D(0.997209, 0.0746611, -0.000323617, -0.0746553, 0.997171, 0.00879697, 0.000979493, -0.00874826, 0.999961, 8.9154e-15, 1.25473, -7.47878e-08)
+transform = Transform3D(0.997209, 0.074661, -0.000323617, -0.0746553, 0.997171, 0.00879698, 0.000979493, -0.00874826, 0.999961, 8.91536e-15, 1.25473, -7.47877e-08)
 bone_name = "Bone.003"
 bone_idx = 9
 
@@ -644,7 +643,7 @@ bone_idx = 9
 transform = Transform3D(1, 0, -1.86265e-08, 0, 1, 0, 9.31323e-09, -7.45058e-09, 1, -0.0905834, 0.684627, 0.0294042)
 
 [node name="RingBasePosition" type="BoneAttachment3D" parent="Skeleton3D"]
-transform = Transform3D(0.814348, 0.580372, 0.00241006, -0.579989, 0.813949, -0.0331557, -0.0212043, 0.0256025, 0.999447, 8.9154e-15, 1.25473, -7.47878e-08)
+transform = Transform3D(0.814349, 0.580371, 0.00241008, -0.579989, 0.81395, -0.0331557, -0.0212043, 0.0256025, 0.999447, 8.91536e-15, 1.25473, -7.47877e-08)
 bone_name = "Bone.004"
 bone_idx = 13
 
@@ -652,7 +651,7 @@ bone_idx = 13
 transform = Transform3D(1, -4.76837e-07, 2.94298e-07, -2.98023e-07, 0.999998, 3.83705e-07, -1.41561e-07, 3.01749e-07, 0.999998, 0.0423237, 0.76601, 0.0602039)
 
 [node name="PinkyBasePosition" type="BoneAttachment3D" parent="Skeleton3D"]
-transform = Transform3D(0.520513, 0.853747, -0.0135187, -0.851734, 0.51804, -0.0786318, -0.0601284, 0.0524432, 0.996812, 8.9154e-15, 1.25473, -7.47878e-08)
+transform = Transform3D(0.520513, 0.853746, -0.0135186, -0.851734, 0.518041, -0.0786319, -0.0601285, 0.0524432, 0.996812, 8.91536e-15, 1.25473, -7.47877e-08)
 bone_name = "Bone.005"
 bone_idx = 17
 
@@ -660,7 +659,7 @@ bone_idx = 17
 transform = Transform3D(1, 8.9407e-08, -1.49012e-08, -5.06639e-07, 1, 8.19564e-08, -4.65661e-07, 1.58325e-07, 1, 0.0215015, 0.74108, 0.0427172)
 
 [node name="ThumbBasePosition" type="BoneAttachment3D" parent="Skeleton3D"]
-transform = Transform3D(0.435809, -0.899471, -0.0319815, 0.895766, 0.430008, 0.112673, -0.0875935, -0.0777518, 0.993117, 8.9154e-15, 1.25473, -7.47878e-08)
+transform = Transform3D(0.435809, -0.899471, -0.0319815, 0.895767, 0.430008, 0.112673, -0.0875936, -0.0777518, 0.993117, 8.91536e-15, 1.25473, -7.47877e-08)
 bone_name = "Bone.001"
 bone_idx = 2
 

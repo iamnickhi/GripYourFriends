@@ -7,10 +7,13 @@ namespace Gripper;
 public partial class Masterhand : RigidBody3D
 {
 	Marker3D TargetPosNode;
+	Vector3 SmoothedTargetPos;
+	Quaternion SmoothedRotDelta = Quaternion.Identity;
+	CharacterBody3D Player;
 	[Export]
-	public float HandRotateSpeed = 0.2f; 
+	public float HandFollowSpeed = 9f;
 	[Export]
-	public float HandFollowSpeed = 7f;
+	public float HandTorqueSpeed = 1000f;
 	private Vector3 MarkerVel = Vector3.Zero;
 	private Vector3 PrevMarkerPos = Vector3.Inf;
 	private Godot.Collections.Array<Node3D> collisions = [];
@@ -53,6 +56,7 @@ public partial class Masterhand : RigidBody3D
 	public override void _Ready()
 	{
 		TargetPosNode = GetParent<Marker3D>();
+		Player = GetParent().GetParent().GetParent<CharacterBody3D>();
 		animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 		PalmCollision = GetNode<CollisionShape3D>("PalmCollision");
 		PalmPosition = GetNode<Marker3D>("Skeleton3D/PalmPosition/Marker3D");
@@ -104,24 +108,28 @@ public partial class Masterhand : RigidBody3D
 
     private void RotationFollow(PhysicsDirectBodyState3D state)
     {
-		Vector3 forwardLocalAxis = new(0, 0, -1);
-        Vector3 forwardDir = (GlobalTransform.Basis * forwardLocalAxis).Normalized();
-
-		Vector3 targetDir = (TargetPosNode.GlobalBasis * forwardLocalAxis).Normalized();
-		float localSpeed = Mathf.Clamp(HandRotateSpeed, 0.0f, 0.75f * Mathf.Acos(forwardDir.Dot(targetDir)));
-		if (IsColliding) localSpeed /= 5;
-        if (forwardDir.Dot(targetDir) > 1e-4)
-        {
-            AngularVelocity = forwardDir.Cross(targetDir) * localSpeed / state.Step;
-        }
-		GlobalRotation = new Vector3(GlobalRotation.X, GlobalRotation.Y, TargetPosNode.GlobalRotation.Z);
+		Quaternion currentRot = GlobalTransform.Basis.GetRotationQuaternion();
+		Quaternion targetRot = TargetPosNode.GetGlobalTransform().Basis.GetRotationQuaternion();
+		Quaternion rotDelta = (targetRot * currentRot.Inverse()).Normalized();
+		rotDelta.Normalized();
+		if (rotDelta.W < 0) rotDelta = -rotDelta;
+		Vector3 torque = rotDelta.GetAxis() * rotDelta.GetAngle() * HandTorqueSpeed * state.Step;
+		ApplyTorque(torque);
     }
 	
 	private void PositionFollow(PhysicsDirectBodyState3D state)
 	{
-		Vector3 targetPos = TargetPosNode.GlobalPosition;
-		float localSpeed = Mathf.Clamp(HandFollowSpeed, 0.0f, 2*(targetPos - GlobalPosition + MarkerVel).Length());
-		ApplyCentralForce((targetPos - GlobalPosition) * localSpeed / state.Step);
+	 Vector3 targetPos = TargetPosNode.GlobalPosition;
+
+    	// Smooth out the target position changes to avoid abrupt jumps
+    	SmoothedTargetPos = SmoothedTargetPos.Lerp(targetPos, 1.0f - Mathf.Exp(-20f * (float)state.Step));
+		Vector3 positionError = SmoothedTargetPos - GlobalPosition;
+		Vector3 desiredVelocity = positionError / state.Step;
+		Vector3 velocityError = desiredVelocity - state.LinearVelocity;
+		float dampingFactor = Mathf.Clamp(positionError.Length() / .1f, .1f, 1.0f);
+		float forceStrength = Mathf.Clamp(HandFollowSpeed, .0f, velocityError.Length() * dampingFactor);
+		GD.Print(velocityError.Length());
+		ApplyCentralForce(velocityError * forceStrength);
 	}
 	
 	private void UpdateCollisionShapes()

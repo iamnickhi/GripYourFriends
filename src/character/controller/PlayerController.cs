@@ -190,6 +190,7 @@ public partial class PlayerController : CharacterBody3D
 		Head = GetNode<Node3D>("Head");
 		RightGripper = GetNode<Masterhand>("Head/RightHandPos/GripperRight");
 		LeftGripper = GetNode<Masterhand>("Head/LeftHandPos/GripperLeft");
+		Camera = GetNode<Camera3D>("Head/Camera");
 #endregion
 
 #region main control flow
@@ -215,7 +216,6 @@ public partial class PlayerController : CharacterBody3D
 	public override void _Process(double delta)
 	{
 		HandleHeadRotation();
-		// Camera movement outside of physics ticks for max responsiveness
 		if (DynamicFov) // this may be changed to an animationplayer
 		{
 			UpdateCameraFov();
@@ -231,7 +231,7 @@ public partial class PlayerController : CharacterBody3D
 	}
 
     public override void _PhysicsProcess(double delta)
-    {
+    {		
 		if (DynamicGravity)
 		{
 			Gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsDouble();

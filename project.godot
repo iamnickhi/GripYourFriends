@@ -89,8 +89,12 @@ grab_lh={
 
 3d/physics_engine="Jolt Physics"
 common/physics_interpolation=true
-common/max_fps=0
 common/directional_shadow/size=4096
 common/positional_shadow/soft_shadow_filter_quality=2
 common/directional_shadow/soft_shadow_filter_quality=2
 common/sdfgi/frames_to_update_lights=2
+common/max_fps=0
+common/simulation/position_steps=2
+common/simulation/velocity_steps=10
+common/simulation/baumgarte_stabilization_factor=0.5
+common/simulation/penetration_slop=0.02

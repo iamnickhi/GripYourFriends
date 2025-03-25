@@ -439,8 +439,6 @@ continuous_cd = true
 contact_monitor = true
 max_contacts_reported = 1
 linear_damp = 26.212
-HandRotateSpeed = 0.6
-HandFollowSpeed = 9.0
 
 [node name="LeftHandPos" type="Marker3D" parent="Head"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4, -0.4, -0.6)

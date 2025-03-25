@@ -4,13 +4,13 @@
 [ext_resource type="Texture2D" uid="uid://pe7a4weirj2g" path="res://textures/dark.png" id="2_08fdt"]
 [ext_resource type="Texture2D" uid="uid://cxjxvqmf4boxq" path="res://textures/green.png" id="3_q4clv"]
 [ext_resource type="Texture2D" uid="uid://dsv4jm4vydflb" path="res://textures/orange.png" id="4_1ns5t"]
-[ext_resource type="PackedScene" uid="uid://br73tlrq5g66b" path="res://chritinwothless/Playground.glb" id="5_lf0gk"]
 [ext_resource type="PackedScene" uid="uid://bu6grhl71sq8w" path="res://chritinwothless/First Level.glb" id="6_cnaw2"]
 [ext_resource type="PackedScene" uid="uid://dbvncdnhblusq" path="res://chritinwothless/Ramp.glb" id="7_kt6p6"]
 [ext_resource type="PackedScene" uid="uid://dawdqvi3joiik" path="res://chritinwothless/LilyPad.glb" id="8_uu1iw"]
 [ext_resource type="PackedScene" uid="uid://daflaxcxwq2et" path="res://chritinwothless/CatTail.glb" id="9_4tg7h"]
 [ext_resource type="PackedScene" uid="uid://bybhyf2wkekyu" path="res://chritinwothless/Mushroom.glb" id="10_ud3vi"]
 [ext_resource type="PackedScene" uid="uid://cc6n7abc276h1" path="res://chritinwothless/Crate.glb" id="11_5457m"]
+[ext_resource type="PackedScene" uid="uid://ckxcfv5uxfnbb" path="res://playgroundfix.tscn" id="11_ivea3"]
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_edcox"]
 ground_color = Color(0.160784, 0.815686, 0.905882, 1)
@@ -118,9 +118,6 @@ shadow_blur = 1.2
 directional_shadow_fade_start = 1.0
 directional_shadow_max_distance = 84.6
 
-[node name="Playground" parent="." instance=ExtResource("5_lf0gk")]
-transform = Transform3D(8, 0, 0, 0, 8, 0, 0, 0, 8, 1.55814, -20.8384, -5.59528)
-
 [node name="First Level" parent="." instance=ExtResource("6_cnaw2")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -64.9637, 32.9584, -13.3093)
 
@@ -147,3 +144,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44.486, 24.557, -30.9108)
 
 [node name="Crate" parent="." instance=ExtResource("11_5457m")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -61.0044, 24.8064, -3.36746)
+
+[node name="Playground2" parent="." instance=ExtResource("11_ivea3")]
+transform = Transform3D(8, 0, 0, 0, 8, 0, 0, 0, 8, 1.52, -20.8, -1.76718)

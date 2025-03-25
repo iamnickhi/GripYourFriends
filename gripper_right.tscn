@@ -1,8 +1,9 @@
-[gd_scene load_steps=20 format=4 uid="uid://bfbb863c2q4nv"]
+[gd_scene load_steps=25 format=4 uid="uid://bfbb863c2q4nv"]
 
 [ext_resource type="Script" uid="uid://c6r15na7feaao" path="res://Masterhand.cs" id="2_imv01"]
 
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_imv01"]
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_1l37x"]
+friction = 0.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u32yu"]
 resource_name = "Skin"
@@ -339,21 +340,17 @@ _data = {
 height = 0.885742
 radius = 0.638672
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_imv01"]
-radius = 0.230541
-height = 0.623369
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_1l37x"]
+height = 0.544373
+radius = 0.228027
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_05rra"]
-radius = 0.230541
-height = 0.738803
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_lwite"]
+height = 0.51268
+radius = 0.205566
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_lwite"]
-radius = 0.193901
-height = 0.50342
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_gmqx4"]
-radius = 0.178914
-height = 0.45193
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_gmqx4"]
+height = 0.571869
+radius = 0.218262
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7efd5"]
 radius = 0.230541
@@ -371,13 +368,37 @@ height = 1.14517
 radius = 0.178914
 height = 0.823992
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_v4bnd"]
-radius = 0.349487
-height = 1.21709
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_7efd5"]
+height = 1.06213
+radius = 0.321777
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_da1ea"]
+height = 1.30054
+radius = 0.285645
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_cvdqm"]
+height = 1.26709
+radius = 0.288086
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_ypfuq"]
+height = 1.16235
+radius = 0.322754
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_v4bnd"]
+height = 0.889038
+radius = 0.310059
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_05rra"]
+radius = 0.230541
+height = 0.738803
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_05rra"]
+height = 0.726677
+radius = 0.216797
 
 [node name="GripperRight" type="RigidBody3D"]
 collision_layer = 4
-physics_material_override = SubResource("PhysicsMaterial_imv01")
+physics_material_override = SubResource("PhysicsMaterial_1l37x")
 gravity_scale = 0.0
 continuous_cd = true
 contact_monitor = true
@@ -385,8 +406,6 @@ max_contacts_reported = 1
 linear_damp = 26.0
 angular_damp = 1.0
 script = ExtResource("2_imv01")
-HandRotateSpeed = 0.6
-HandFollowSpeed = 9.0
 
 [node name="Skeleton3D" type="Skeleton3D" parent="."]
 transform = Transform3D(-0.214182, 0.037477, -0.370974, 0.372391, -1.62777e-08, -0.215, -0.0187385, -0.428364, -0.032456, 0.58, 0, 0.56)
@@ -547,7 +566,7 @@ mesh = SubResource("ArrayMesh_o2m4n")
 skin = SubResource("Skin_w4e04")
 
 [node name="PalmPosition" type="BoneAttachment3D" parent="Skeleton3D"]
-transform = Transform3D(0.970867, 0.239619, 2.52791e-07, -0.239619, 0.970867, -9.98199e-10, -2.45666e-07, -5.96046e-08, 1, 0, 0, 0)
+transform = Transform3D(0.970867, 0.239619, 2.52791e-07, -0.239619, 0.970867, -9.98197e-10, -2.45666e-07, -5.96046e-08, 1, 0, 0, 0)
 bone_name = "Bone"
 bone_idx = 1
 
@@ -555,7 +574,7 @@ bone_idx = 1
 transform = Transform3D(0.999999, -2.98023e-08, -1.39698e-08, 5.21541e-08, 1, 1.49012e-08, 3.47849e-07, -2.98023e-08, 1, 0.0129806, 1.23015, 0.0663194)
 
 [node name="IndexShaftPosition" type="BoneAttachment3D" parent="Skeleton3D"]
-transform = Transform3D(0.878291, 0.478101, -0.0049072, -0.478093, 0.878305, 0.00267091, 0.00558698, 2.6077e-07, 0.999984, 1.0842, 2.18291, -0.052781)
+transform = Transform3D(0.878291, 0.478101, -0.0049072, -0.478093, 0.878305, 0.00267091, 0.00558698, 2.57045e-07, 0.999984, 1.0842, 2.18291, -0.052781)
 bone_name = "Bone.008"
 bone_idx = 6
 
@@ -571,7 +590,7 @@ bone_idx = 10
 transform = Transform3D(1, 3.72529e-09, -7.45058e-09, 1.49012e-08, 1, 2.98023e-08, -2.11876e-07, -1.49012e-08, 1, -0.0829652, 0.271621, 0.0366681)
 
 [node name="RingShaftPosition" type="BoneAttachment3D" parent="Skeleton3D"]
-transform = Transform3D(0.998002, -0.0629777, -0.00511423, 0.0629769, 0.998015, -0.000322802, 0.00512441, 7.82311e-08, 0.999987, -0.188874, 2.45295, 0.0340181)
+transform = Transform3D(0.998002, -0.0629777, -0.00511424, 0.0629769, 0.998015, -0.0003228, 0.00512441, 7.45058e-08, 0.999987, -0.188874, 2.45295, 0.0340181)
 bone_name = "Bone.014"
 bone_idx = 14
 
@@ -587,7 +606,7 @@ bone_idx = 18
 transform = Transform3D(1, -5.96046e-08, -1.56462e-07, 5.96046e-08, 1, -8.56817e-08, 2.30968e-07, -1.11759e-08, 1, -0.000432789, 0.165534, 0.00342667)
 
 [node name="ThumbShaftPosition" type="BoneAttachment3D" parent="Skeleton3D"]
-transform = Transform3D(0.280903, 0.959671, -0.0112135, -0.958907, 0.281127, 0.0382784, 0.0398871, 1.2666e-07, 0.999204, 1.42943, 1.45166, -0.0898943)
+transform = Transform3D(0.280903, 0.959671, -0.0112134, -0.958907, 0.281127, 0.0382784, 0.0398871, 1.19209e-07, 0.999204, 1.42943, 1.45166, -0.0898943)
 bone_name = "Bone.006"
 bone_idx = 3
 
@@ -595,7 +614,7 @@ bone_idx = 3
 transform = Transform3D(1, 2.98023e-08, 0, 0, 1, -7.45058e-09, -7.45058e-09, 0, 1, -0.00962162, 0.390039, 0.0104381)
 
 [node name="IndexTipPosition" type="BoneAttachment3D" parent="Skeleton3D"]
-transform = Transform3D(0.906343, 0.422513, -0.00506398, -0.422506, 0.906357, 0.00236037, 0.00558706, 2.56812e-07, 0.999984, 1.29788, 2.57545, -0.0527809)
+transform = Transform3D(0.906343, 0.422513, -0.00506398, -0.422506, 0.906357, 0.00236037, 0.00558706, 2.53174e-07, 0.999984, 1.29788, 2.57545, -0.0527809)
 bone_name = "Bone.009"
 bone_idx = 7
 
@@ -603,15 +622,15 @@ bone_idx = 7
 transform = Transform3D(1, -2.38419e-07, 1.73226e-07, 1.78814e-07, 0.999998, -1.49012e-07, -6.51926e-09, -1.63913e-07, 1, 0.00351676, 0.407703, -0.00187302)
 
 [node name="MiddleTipPosition" type="BoneAttachment3D" parent="Skeleton3D"]
-transform = Transform3D(0.970867, 0.239619, -5.41736e-05, -0.239619, 0.970867, 1.32988e-05, 5.57822e-05, 6.94386e-08, 1, 0.65241, 3.01141, -0.0111638)
+transform = Transform3D(0.970867, 0.239619, -5.41736e-05, -0.239619, 0.970867, 1.32988e-05, 5.57822e-05, 6.94387e-08, 1, 0.65241, 3.01141, -0.0111638)
 bone_name = "Bone.012"
 bone_idx = 11
 
 [node name="Marker3D" type="Marker3D" parent="Skeleton3D/MiddleTipPosition"]
-transform = Transform3D(1, -7.45058e-09, 2.03494e-07, -3.72529e-08, 1, 0, 5.40167e-08, 0, 1, 0.00498247, 0.459276, 0.0083636)
+transform = Transform3D(1, -1.19209e-07, 1.13621e-07, 5.96046e-08, 0.999999, -2.23517e-08, -2.41213e-07, -1.11759e-07, 1, -0.0952926, 0.438279, 0.019401)
 
 [node name="RingTipPosition" type="BoneAttachment3D" parent="Skeleton3D"]
-transform = Transform3D(0.99839, -0.0564961, -0.00511633, 0.0564953, 0.998403, -0.000289589, 0.00512452, 7.34435e-08, 0.999987, -0.214141, 2.85336, 0.0340182)
+transform = Transform3D(0.99839, -0.0564961, -0.00511633, 0.0564954, 0.998403, -0.000289587, 0.00512452, 6.97255e-08, 0.999987, -0.214141, 2.85336, 0.0340182)
 bone_name = "Bone.015"
 bone_idx = 15
 
@@ -619,7 +638,7 @@ bone_idx = 15
 transform = Transform3D(0.999999, 4.47035e-07, -1.11759e-07, -8.9407e-08, 0.999998, -2.23517e-08, -1.45286e-07, 1.2666e-07, 0.999998, 0.000183463, 0.370835, -0.000922203)
 
 [node name="PinkyTipPosition" type="BoneAttachment3D" parent="Skeleton3D"]
-transform = Transform3D(0.833657, -0.551779, -0.0235737, 0.551559, 0.83399, -0.0155966, 0.0282661, -9.03383e-08, 0.9996, -0.899596, 2.44659, 0.0722483)
+transform = Transform3D(0.833657, -0.551779, -0.0235737, 0.551559, 0.83399, -0.0155966, 0.0282661, -8.9407e-08, 0.9996, -0.899596, 2.44659, 0.0722483)
 bone_name = "Bone.018"
 bone_idx = 19
 
@@ -672,61 +691,61 @@ libraries = {
 }
 
 [node name="PalmCollision" type="CollisionShape3D" parent="."]
-transform = Transform3D(-0.205124, 0.0530109, -0.374185, 0.376585, -0.00709664, -0.207445, -0.0317495, -0.426662, -0.0430406, 0.596935, 0.00245968, 0.136662)
+transform = Transform3D(-0.216922, -0.014937, -0.370974, 0.361542, 0.0892321, -0.215, 0.0844517, -0.420375, -0.032456, 0.534207, 0.100203, 0.0418201)
 shape = SubResource("CylinderShape3D_imv01")
 
 [node name="IndexShaftCollision" type="CollisionShape3D" parent="."]
-transform = Transform3D(-0.213949, -0.000766258, -0.372995, 0.364899, 0.0886799, -0.209487, 0.077297, -0.420756, -0.0434729, 0.609079, 0.231176, -0.557403)
-shape = SubResource("CapsuleShape3D_imv01")
-
-[node name="MiddleShaftCollision" type="CollisionShape3D" parent="."]
-transform = Transform3D(-0.205807, 0.0503768, -0.374173, 0.376634, -0.00226851, -0.207466, -0.0262798, -0.427033, -0.0430389, 0.746563, -0.0726016, -0.627032)
-shape = SubResource("CapsuleShape3D_05rra")
+transform = Transform3D(-0.208104, -0.0694845, -0.369813, 0.325867, 0.17804, -0.216834, 0.188159, -0.385193, -0.0335143, 0.431357, 0.461322, -0.49332)
+shape = SubResource("CylinderShape3D_1l37x")
 
 [node name="RingShaftCollision" type="CollisionShape3D" parent="."]
-transform = Transform3D(-0.181654, 0.11216, -0.373259, 0.356006, -0.119852, -0.209272, -0.158623, -0.397436, -0.042228, 0.865037, -0.323379, -0.492514)
-shape = SubResource("CapsuleShape3D_lwite")
+transform = Transform3D(-0.213295, 0.0508911, -0.369886, 0.370545, -0.0234521, -0.216901, -0.0458446, -0.426333, -0.0322214, 0.710498, -0.0850891, -0.571787)
+shape = SubResource("CylinderShape3D_lwite")
 
 [node name="PinkyShaftCollision" type="CollisionShape3D" parent="."]
-transform = Transform3D(-0.0813717, 0.199675, -0.372033, 0.198861, -0.316102, -0.213151, -0.372469, -0.212389, -0.032525, 0.922219, -0.506656, -0.277596)
-shape = SubResource("CapsuleShape3D_gmqx4")
+transform = Transform3D(-0.144176, 0.171439, -0.367042, 0.270045, -0.249741, -0.222721, -0.301975, -0.305186, -0.0239293, 0.810974, -0.314418, -0.42826)
+shape = SubResource("CylinderShape3D_gmqx4")
 
 [node name="ThumbShaftCollision" type="CollisionShape3D" parent="."]
-transform = Transform3D(-0.163782, -0.15064, -0.367945, 0.187086, 0.321932, -0.215078, 0.350819, -0.242008, -0.0570789, 0.440765, 0.577327, -0.33344)
+transform = Transform3D(-0.110898, -0.195008, -0.366843, 0.0960301, 0.357373, -0.219005, 0.404203, -0.138407, -0.0486171, 0.282771, 0.687814, -0.144089)
 shape = SubResource("CapsuleShape3D_7efd5")
 
 [node name="IndexTipCollision" type="CollisionShape3D" parent="."]
-transform = Transform3D(-0.213586, 0.0124206, -0.372997, 0.369708, 0.0657257, -0.209514, 0.0509611, -0.424765, -0.0433257, 0.613748, 0.288553, -0.888833)
+transform = Transform3D(-0.212029, -0.0565269, -0.369795, 0.336313, 0.157339, -0.216882, 0.163821, -0.396167, -0.0333716, 0.395019, 0.560402, -0.726715)
 shape = SubResource("CapsuleShape3D_da1ea")
 
-[node name="MiddleTipCollision" type="CollisionShape3D" parent="."]
-transform = Transform3D(-0.205144, 0.0530107, -0.374173, 0.376573, -0.00709671, -0.207466, -0.0317519, -0.426661, -0.0430386, 0.795211, -0.0712054, -0.94419)
-shape = SubResource("CapsuleShape3D_05rra")
-
 [node name="RingTipCollision" type="CollisionShape3D" parent="."]
-transform = Transform3D(-0.182378, 0.11099, -0.373254, 0.356777, -0.117531, -0.209275, -0.156039, -0.398456, -0.0422412, 0.964024, -0.401909, -0.82131)
+transform = Transform3D(-0.213621, 0.0495173, -0.369883, 0.370689, -0.0210385, -0.216902, -0.0430751, -0.42662, -0.0322356, 0.738846, -0.094592, -0.817554)
 shape = SubResource("CapsuleShape3D_cvdqm")
 
 [node name="PinkyTipCollision" type="CollisionShape3D" parent="."]
-transform = Transform3D(-0.110511, 0.186791, -0.371209, 0.243944, -0.281803, -0.214426, -0.33642, -0.265699, -0.0335442, 1.03478, -0.671099, -0.425014)
+transform = Transform3D(-0.168369, 0.149437, -0.366361, 0.304369, -0.205478, -0.223693, -0.252807, -0.346912, -0.02532, 0.89804, -0.428695, -0.615232)
 shape = SubResource("CapsuleShape3D_ypfuq")
 
 [node name="IndexBaseCollision" type="CollisionShape3D" parent="."]
-transform = Transform3D(-0.211716, -0.0235285, -0.373528, 0.341794, 0.162698, -0.203977, 0.152491, -0.397336, -0.061404, 0.630243, 0.114589, -0.261271)
-shape = SubResource("CapsuleShape3D_v4bnd")
+transform = Transform3D(-0.193436, -0.0901039, -0.373314, 0.287104, 0.243684, -0.207581, 0.255057, -0.342636, -0.0494611, 0.499564, 0.291413, -0.241454)
+shape = SubResource("CylinderShape3D_7efd5")
 
 [node name="MiddleBaseCollision" type="CollisionShape3D" parent="."]
-transform = Transform3D(-0.200471, 0.071449, -0.37364, 0.375072, -0.0333781, -0.207622, -0.0635018, -0.422707, -0.0467609, 0.694437, -0.0534682, -0.257242)
-shape = SubResource("CapsuleShape3D_v4bnd")
+transform = Transform3D(-0.217311, 0.00454628, -0.37102, 0.367265, 0.0638663, -0.214329, 0.0528407, -0.425199, -0.0361599, 0.573166, 0.146306, -0.266334)
+shape = SubResource("CylinderShape3D_da1ea")
 
 [node name="RingBaseCollision" type="CollisionShape3D" parent="."]
-transform = Transform3D(-0.139706, 0.152616, -0.376948, 0.300637, -0.229647, -0.204401, -0.27386, -0.329955, -0.0320906, 0.726647, -0.16603, -0.238495)
-shape = SubResource("CapsuleShape3D_v4bnd")
+transform = Transform3D(-0.188718, 0.10424, -0.372048, 0.344222, -0.142703, -0.214586, -0.17549, -0.392007, -0.0208163, 0.615022, -0.00158788, -0.292593)
+shape = SubResource("CylinderShape3D_cvdqm")
 
 [node name="PinkyBaseCollision" type="CollisionShape3D" parent="."]
-transform = Transform3D(-0.0724124, 0.182962, -0.382337, 0.183592, -0.336064, -0.19559, -0.382036, -0.196179, -0.0215234, 0.756048, -0.243994, -0.126741)
-shape = SubResource("CapsuleShape3D_v4bnd")
+transform = Transform3D(-0.136456, 0.158004, -0.375913, 0.25778, -0.273715, -0.208625, -0.315943, -0.291573, -0.00786196, 0.669138, -0.111191, -0.20871)
+shape = SubResource("CylinderShape3D_ypfuq")
 
 [node name="ThumbBaseCollision" type="CollisionShape3D" parent="."]
-transform = Transform3D(-0.152772, -0.132614, -0.37944, 0.160898, 0.351805, -0.187737, 0.368338, -0.208679, -0.0753687, 0.54797, 0.180351, -0.0980102)
-shape = SubResource("CapsuleShape3D_v4bnd")
+transform = Transform3D(-0.0966035, -0.172694, -0.381752, 0.067353, 0.380283, -0.189069, 0.413547, -0.102279, -0.0583813, 0.437936, 0.364339, -0.0361121)
+shape = SubResource("CylinderShape3D_v4bnd")
+
+[node name="MiddleTipCollision" type="CollisionShape3D" parent="."]
+transform = Transform3D(-0.216943, -0.0149369, -0.370962, 0.36153, 0.089232, -0.21502, 0.0844499, -0.420374, -0.0324607, 0.564195, 0.245838, -0.934761)
+shape = SubResource("CapsuleShape3D_05rra")
+
+[node name="MiddleShaftCollision" type="CollisionShape3D" parent="."]
+transform = Transform3D(-0.216734, -0.0177166, -0.370962, 0.360357, 0.0938594, -0.21502, 0.0898319, -0.419257, -0.032461, 0.566626, 0.181177, -0.632589)
+shape = SubResource("CylinderShape3D_05rra")
