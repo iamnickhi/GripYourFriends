@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://cpr5b33fva3v4"]
+[gd_scene format=3 uid="uid://cpr5b33fva3v4"]
 
 [ext_resource type="PackedScene" uid="uid://cc1m2a1obsyn4" path="res://src/character/character.tscn" id="1_e18vq"]
 [ext_resource type="Texture2D" uid="uid://pe7a4weirj2g" path="res://textures/dark.png" id="2_08fdt"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://bybhyf2wkekyu" path="res://chritinwothless/Mushroom.glb" id="10_ud3vi"]
 [ext_resource type="PackedScene" uid="uid://cc6n7abc276h1" path="res://chritinwothless/Crate.glb" id="11_5457m"]
 [ext_resource type="PackedScene" uid="uid://ckxcfv5uxfnbb" path="res://playgroundfix.tscn" id="11_ivea3"]
+[ext_resource type="Script" uid="uid://cv3g5w6aenmvy" path="res://LargeBody.cs" id="12_ivea3"]
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_edcox"]
 ground_color = Color(0.160784, 0.815686, 0.905882, 1)
@@ -33,10 +34,10 @@ frequency = 0.0027
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_7akuf"]
 width = 1024
 height = 1024
-in_3d_space = true
-seamless = true
-color_ramp = SubResource("Gradient_ur0vy")
 noise = SubResource("FastNoiseLite_jd3pw")
+color_ramp = SubResource("Gradient_ur0vy")
+seamless = true
+in_3d_space = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_67ysu"]
 albedo_texture = SubResource("NoiseTexture2D_7akuf")
@@ -67,50 +68,63 @@ roughness = 0.5
 uv1_triplanar = true
 uv1_triplanar_sharpness = 0.000850145
 
-[node name="test_world" type="Node3D"]
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ivea3"]
+friction = 0.8
+rough = true
+absorbent = true
 
-[node name="Character" parent="." instance=ExtResource("1_e18vq")]
+[sub_resource type="BoxMesh" id="BoxMesh_5457m"]
+
+[sub_resource type="Skin" id="Skin_ivea3"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_jvck6"]
+points = PackedVector3Array(-0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5)
+
+[node name="test_world" type="Node3D" unique_id=289406623]
+
+[node name="Character" parent="." unique_id=447883022 instance=ExtResource("1_e18vq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0.703523)
+input_ray_pickable = false
 floor_snap_length = 0.2
 CrouchSpeed = 2.0
-StrafeCoef = 0.3
+StrafeCoef = 0.15
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=2088194731]
 environment = SubResource("Environment_20rw3")
 
-[node name="terrain" type="Node3D" parent="."]
+[node name="terrain" type="Node3D" parent="." unique_id=1691026992]
 
-[node name="CSGBox3D" type="CSGBox3D" parent="terrain"]
+[node name="CSGBox3D" type="CSGBox3D" parent="terrain" unique_id=1833292954]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, -6.8404, 37.3215)
 use_collision = true
 size = Vector3(30, 1, 30)
 material = SubResource("StandardMaterial3D_67ysu")
 
-[node name="CSGBox3D2" type="CSGBox3D" parent="terrain"]
+[node name="CSGBox3D2" type="CSGBox3D" parent="terrain" unique_id=1457388532]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5.52401, 17.9714)
 use_collision = true
 size = Vector3(10, 1, 10)
 material = SubResource("StandardMaterial3D_gomnb")
 
-[node name="CSGBox3D3" type="CSGBox3D" parent="terrain"]
+[node name="CSGBox3D3" type="CSGBox3D" parent="terrain" unique_id=311182512]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, -3.22401, 14.9714)
 use_collision = true
 size = Vector3(4, 0.5, 4)
 material = SubResource("StandardMaterial3D_gomnb")
 
-[node name="CSGBox3D4" type="CSGBox3D" parent="terrain"]
+[node name="CSGBox3D4" type="CSGBox3D" parent="terrain" unique_id=1751887211]
 transform = Transform3D(0.939693, 0.34202, 0, -0.34202, 0.939693, 0, 0, 0, 1, -9.5, -3.82401, 17.9714)
 use_collision = true
 size = Vector3(10, 1, 10)
 material = SubResource("StandardMaterial3D_u0sbk")
 
-[node name="CSGBox3D5" type="CSGBox3D" parent="terrain"]
+[node name="CSGBox3D5" type="CSGBox3D" parent="terrain" unique_id=324262181]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5, -2.02401, 12.4714)
 use_collision = true
 size = Vector3(19, 8, 1)
 material = SubResource("StandardMaterial3D_7j4uu")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1327382272]
 transform = Transform3D(0.908304, 0.38081, -0.173112, 0.0109866, 0.391976, 0.91991, 0.418167, -0.83746, 0.351849, -0.0519464, 6.29098, -0.0433669)
 light_angular_distance = 0.5
 shadow_enabled = true
@@ -118,32 +132,45 @@ shadow_blur = 1.2
 directional_shadow_fade_start = 1.0
 directional_shadow_max_distance = 84.6
 
-[node name="First Level" parent="." instance=ExtResource("6_cnaw2")]
+[node name="First Level" parent="." unique_id=114522768 instance=ExtResource("6_cnaw2")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -64.9637, 32.9584, -13.3093)
 
-[node name="Ramp" parent="." instance=ExtResource("7_kt6p6")]
+[node name="Ramp" parent="." unique_id=629509308 instance=ExtResource("7_kt6p6")]
 transform = Transform3D(8, 0, 0, 0, 8, 0, 0, 0, 8, 1.5846, -20.8305, -13.8506)
 
-[node name="LilyPad" parent="." instance=ExtResource("8_uu1iw")]
+[node name="LilyPad" parent="." unique_id=411537941 instance=ExtResource("8_uu1iw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50.7376, 23.4032, -8.43706)
 
-[node name="CatTail" parent="." instance=ExtResource("9_4tg7h")]
+[node name="CatTail" parent="." unique_id=2080696543 instance=ExtResource("9_4tg7h")]
 transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -53.8864, 24.0602, -17.2726)
 
-[node name="CatTail2" parent="." instance=ExtResource("9_4tg7h")]
+[node name="CatTail2" parent="." unique_id=1793023089 instance=ExtResource("9_4tg7h")]
 transform = Transform3D(0.0758715, 0, 0.0651423, 0, 0.1, 0, -0.0651423, 0, 0.0758715, -53.8159, 24.0602, -18.7189)
 
-[node name="CatTail3" parent="." instance=ExtResource("9_4tg7h")]
+[node name="CatTail3" parent="." unique_id=1158886208 instance=ExtResource("9_4tg7h")]
 transform = Transform3D(-0.0981457, 0, -0.0191683, 0, 0.1, 0, 0.0191683, 0, -0.0981457, -54.3741, 24.0602, -17.8381)
 
-[node name="Mushroom" parent="." instance=ExtResource("10_ud3vi")]
+[node name="Mushroom" parent="." unique_id=1736464069 instance=ExtResource("10_ud3vi")]
 transform = Transform3D(0.359036, 0, 0.933324, 0, 1, 0, -0.933324, 0, 0.359036, -1.49303, -5.91174, -16.5264)
 
-[node name="Mushroom2" parent="." instance=ExtResource("10_ud3vi")]
+[node name="Mushroom2" parent="." unique_id=1515730437 instance=ExtResource("10_ud3vi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44.486, 24.557, -30.9108)
 
-[node name="Crate" parent="." instance=ExtResource("11_5457m")]
+[node name="Crate" parent="." unique_id=2119544460 instance=ExtResource("11_5457m")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -61.0044, 24.8064, -3.36746)
 
-[node name="Playground2" parent="." instance=ExtResource("11_ivea3")]
+[node name="Playground2" parent="." unique_id=601258457 instance=ExtResource("11_ivea3")]
 transform = Transform3D(8, 0, 0, 0, 8, 0, 0, 0, 8, 1.52, -20.8, -1.76718)
+
+[node name="PushBlock" type="RigidBody3D" parent="." unique_id=581061233]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.186655, -4.331584, 0)
+mass = 0.5
+physics_material_override = SubResource("PhysicsMaterial_ivea3")
+script = ExtResource("12_ivea3")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="PushBlock" unique_id=1964685267]
+mesh = SubResource("BoxMesh_5457m")
+skin = SubResource("Skin_ivea3")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="PushBlock" unique_id=741116125]
+shape = SubResource("ConvexPolygonShape3D_jvck6")

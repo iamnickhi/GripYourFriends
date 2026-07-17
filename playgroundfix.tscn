@@ -39,7 +39,7 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_kr2ab")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_kbbmr"]
-size = Vector3(2.00192, 0.488617, 2.00407)
+size = Vector3(2.00192, 0.48661807, 2.00407)
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_kbbmr"]
 points = PackedVector3Array(0, 0, 0, 0.338, 0, 0, 0.338, 0, 0.333, 0, 0, 0.333, 0, 0.338, 0, 0, 0.338, 0.333)
@@ -705,7 +705,7 @@ skeleton = NodePath("")
 collision_mask = 7
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Cube/StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000298396, 0.0550542, -9.75046e-05)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000298396, 0.054054733, -9.75046e-05)
 shape = SubResource("BoxShape3D_kbbmr")
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="Cube/StaticBody3D"]
@@ -760,7 +760,7 @@ mesh = SubResource("ArrayMesh_w5aax")
 skeleton = NodePath("")
 
 [node name="Cylinder_004" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.0427707, 0, 0, 0, 0.258857, 0, 0, 0, 0.0427707, -1.08148, 2.00424, -4.12989)
+transform = Transform3D(0.0427707, 0, 0, 0, 0.258857, 0, 0, 0, 0.0427707, -1.08148, 1.9895289, -4.12989)
 mesh = SubResource("ArrayMesh_yqe1m")
 skeleton = NodePath("")
 
@@ -771,7 +771,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0109859, 0)
 shape = SubResource("CylinderShape3D_14o3y")
 
 [node name="Cylinder_005" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.0427707, 0, 0, 0, 0.258857, 0, 0, 0, 0.0427707, -1.08148, 2.00424, -4.49693)
+transform = Transform3D(0.0427707, 0, 0, 0, 0.258857, 0, 0, 0, 0.0427707, -1.08148, 1.9895289, -4.49693)
 mesh = SubResource("ArrayMesh_w4y4d")
 skeleton = NodePath("")
 
@@ -782,7 +782,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00317383, 0)
 shape = SubResource("CylinderShape3D_kiggv")
 
 [node name="Cylinder_006" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.0427707, 0, 0, 0, 0.258857, 0, 0, 0, 0.0427707, -0.212755, 2.00424, -4.12989)
+transform = Transform3D(0.0427707, 0, 0, 0, 0.258857, 0, 0, 0, 0.0427707, -0.212755, 1.9895289, -4.12989)
 mesh = SubResource("ArrayMesh_5rmqj")
 skeleton = NodePath("")
 
@@ -793,7 +793,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0083003, 0)
 shape = SubResource("CylinderShape3D_c1fys")
 
 [node name="Cylinder_007" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.0427707, 0, 0, 0, 0.258857, 0, 0, 0, 0.0427707, -0.212755, 2.00424, -4.49693)
+transform = Transform3D(0.0427707, 0, 0, 0, 0.258857, 0, 0, 0, 0.0427707, -0.212755, 1.9895289, -4.49693)
 mesh = SubResource("ArrayMesh_8hsll")
 skeleton = NodePath("")
 
@@ -804,7 +804,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00610352, 0)
 shape = SubResource("CylinderShape3D_2x2yj")
 
 [node name="Cylinder_008" type="MeshInstance3D" parent="."]
-transform = Transform3D(0, 0.421294, 0, -0.0127279, 0, 0, 0, 0, 0.0127279, -0.663116, 2.23869, -4.12989)
+transform = Transform3D(-5.563542e-10, 0.421294, 0, -0.0127279, -1.8415346e-08, 0, 0, 0, 0.0127279, -0.663116, 2.2239788, -4.12989)
 mesh = SubResource("ArrayMesh_f0rmb")
 skeleton = NodePath("")
 
@@ -815,7 +815,7 @@ transform = Transform3D(0.999998, 0, 0, 0, 1, 0, 0, 0, 0.999998, 0, 0, 0)
 shape = SubResource("CylinderShape3D_1de6x")
 
 [node name="Cylinder_009" type="MeshInstance3D" parent="."]
-transform = Transform3D(0, 0.421294, 0, -0.0127279, 0, 0, 0, 0, 0.0127279, -0.663116, 2.23869, -4.50195)
+transform = Transform3D(-5.563542e-10, 0.421294, 0, -0.0127279, -1.8415346e-08, 0, 0, 0, 0.0127279, -0.663116, 2.2239788, -4.50195)
 mesh = SubResource("ArrayMesh_mug7j")
 skeleton = NodePath("")
 
@@ -826,7 +826,7 @@ transform = Transform3D(0.999998, 0, 0, 0, 1, 0, 0, 0, 0.999998, 0, 0, 0)
 shape = SubResource("CylinderShape3D_pn42j")
 
 [node name="Cylinder_010" type="MeshInstance3D" parent="."]
-transform = Transform3D(0, 1.10329e-08, 0.00744995, -0.00744995, 1.10329e-08, -2.64675e-17, -4.44052e-10, -0.185102, 4.44052e-10, -1.02353, 2.23869, -4.31548)
+transform = Transform3D(1.599675e-17, 1.3974812e-08, 0.00744995, -0.00744995, 1.3974812e-08, -2.6467468e-17, -5.624556e-10, -0.185102, 5.624556e-10, -1.02353, 2.2239788, -4.31548)
 mesh = SubResource("ArrayMesh_kxfed")
 skeleton = NodePath("")
 

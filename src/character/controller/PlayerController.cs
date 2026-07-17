@@ -7,6 +7,10 @@ using System;
 using Debug;
 using System.Runtime.Serialization;
 using Gripper;
+using System.Xml.Serialization;
+using System.Text.RegularExpressions;
+using System.Collections;
+using System.Security.Cryptography.X509Certificates;
 namespace player;
 
 public partial class PlayerController : CharacterBody3D
@@ -30,6 +34,15 @@ public partial class PlayerController : CharacterBody3D
 	[Export]
 	public double JumpVelocity { get; set; } = 4.5;
 	// how far the player turns when the mouse is moved.
+
+	[Export]
+	public bool Immobile { get; set; } = false;
+	// Coefficient for how much control a player has mid-air
+	[Export]
+	public float StrafeCoef { get; set; } = 0.0f;
+	// the reticle file to import at runtime. by default are in res://addons/fpc/reticles/. set to an empty string to remove.
+	[Export(PropertyHint.File)]
+	public string DefaultReticle { get; set; } = "";
 	[Export]
 	public double MouseSensitivity { get; set; } = 0.1;
 	// invert the x axis input for the camera.
@@ -39,14 +52,6 @@ public partial class PlayerController : CharacterBody3D
 	[Export]
 	public bool InvertCameraYAxis { get; set; } = false;
 	// whether the player can use movement inputs. does not stop outside forces or jumping. see jumping enabled.
-	[Export]
-	public bool Immobile { get; set; } = false;
-	// Coefficient for how much control a player has mid-air
-	[Export]
-	public float StrafeCoef { get; set; } = 0.0f;
-	// the reticle file to import at runtime. by default are in res://addons/fpc/reticles/. set to an empty string to remove.
-	[Export(PropertyHint.File)]
-	public string DefaultReticle { get; set; } = "";
 
 #endregion
 
@@ -57,7 +62,6 @@ public partial class PlayerController : CharacterBody3D
 	[Export]
 	public Node3D Head { get; set; }
 	// a reference to the camera for use in the character script.
-	[Export]
 	public Camera3D Camera {get; set; }
 	// a reference to the headbob animation for use in the character script.
 	[Export]
@@ -107,7 +111,6 @@ public partial class PlayerController : CharacterBody3D
 	// the sensitivity of the analog stick that controls camera rotation. lower is less sensitive and higher is more sensitive.
 	[Export(PropertyHint.Range, "0.001, 1, 0.001")]
 	public double LookSensitivity { get; set; } = 0.035;
-
 #endregion
 
 #region feature settings export group
@@ -190,7 +193,7 @@ public partial class PlayerController : CharacterBody3D
 		Head = GetNode<Node3D>("Head");
 		RightGripper = GetNode<Masterhand>("Head/RightHandPos/GripperRight");
 		LeftGripper = GetNode<Masterhand>("Head/LeftHandPos/GripperLeft");
-		Camera = GetNode<Camera3D>("Head/Camera");
+		Camera = GetNode<Camera3D>("Head/Camera3D");
 #endregion
 
 #region main control flow
@@ -215,12 +218,6 @@ public partial class PlayerController : CharacterBody3D
 	// called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		HandleHeadRotation();
-		if (DynamicFov) // this may be changed to an animationplayer
-		{
-			UpdateCameraFov();
-		}
-
 		if (PausingEnabled)
 		{
 		HandlePausing();
@@ -231,7 +228,13 @@ public partial class PlayerController : CharacterBody3D
 	}
 
     public override void _PhysicsProcess(double delta)
-    {		
+    {
+		if (DynamicFov) // this may be changed to an animationplayer
+		{
+			UpdateCameraFov();
+		}
+
+		HandleHeadRotation();
 		if (DynamicGravity)
 		{
 			Gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsDouble();
@@ -249,6 +252,7 @@ public partial class PlayerController : CharacterBody3D
 			InputDir = Input.GetVector(Controls["left"], Controls["right"], Controls["forward"], Controls["backward"]);
 
 		HandleMovement(delta, InputDir);
+
 		// the player is not able to stand up if the ceiling is too low
 		_lowCeiling = CrouchCeilingDetection.IsColliding();
 
@@ -265,23 +269,19 @@ public partial class PlayerController : CharacterBody3D
 
 		if (Input.IsActionJustPressed(Controls["grab_rh"]))
 		{
-			GD.Print("Grab Right");
 			RightGripper.Grab();
 		}
 		if (Input.IsActionJustReleased(Controls["grab_rh"]))
 		{
-			GD.Print("UnGrab Right");
 			RightGripper.UnGrab();
 		}
 	
 		if (Input.IsActionJustPressed(Controls["grab_lh"]))
 		{
-			GD.Print("Grab Left");
 			LeftGripper.Grab();
 		}
 		if (Input.IsActionJustReleased(Controls["grab_lh"]))
 		{
-			GD.Print("UnGrab Left");
 			LeftGripper.UnGrab();
 		}
 
@@ -292,6 +292,173 @@ public partial class PlayerController : CharacterBody3D
 #endregion
 
     }
+	
+	private void GripperClamps(float delta)
+	{
+		if (LeftGripper.currentlyGripping != null)
+		{
+			switch (LeftGripper.currentlyGripping)
+			{
+				case StaticBody3D:
+					HoldingStatic(LeftGripper, delta);
+					break;
+				case LargeBody:
+					HoldingLarge(LeftGripper, delta);
+					break;
+				default:
+					break;
+			}
+		}
+		if (RightGripper.currentlyGripping != null)
+		{
+			switch (RightGripper.currentlyGripping)
+			{
+				case StaticBody3D:
+					HoldingStatic(RightGripper, delta);
+					break;
+				case LargeBody:
+					HoldingLarge(RightGripper, delta);
+					break;
+			}
+		}
+	}
+
+	private void HoldingLarge(Masterhand gripper, float delta)
+	{
+		// Posiion of gripping hand to act as a rope on player
+		// U = 1/2 kx^2
+		float k = 200;
+		float cap = 1.7f;
+		float equilibrium = 1.2f;
+		LargeBody gripping = gripper.currentlyGripping as LargeBody;
+
+		Vector3 toPlayer = CollisionMesh.GlobalPosition - gripper.GlobalPosition;
+		float distance = toPlayer.Length();
+
+		if (distance > equilibrium)
+		{
+			GD.Print(distance);
+			gripper.ropeDir = toPlayer.Normalized();
+			Vector3 v = Velocity;
+
+			float ropeSpeed = v.Dot(gripper.ropeDir);
+			Vector3 grabPoint = gripper.currentlyGripping.ToGlobal(gripper.GrabOffset);
+			Vector3 target = GlobalTransform.Origin;
+			Vector3 direction = target - grabPoint;
+			Vector3 force = direction * 1000.0f * delta;
+
+			float stretch = distance - equilibrium;
+			if (stretch > 0f && IsOnFloor())
+			{
+				v -= gripper.ropeDir * (float) Math.Pow(stretch, 2) * k * 0.5f * delta;
+				gripping.ApplyForce(direction * 10.0f * (float) Math.Pow(stretch, 2) * k * 0.5f * delta, grabPoint - gripper.currentlyGripping.GlobalTransform.Origin);
+			}
+
+			if (distance > cap)
+			{
+				//gripping.ApplyForce(force, position);
+				//gripping.AddGripper(gripper);
+				float pullingSpeed = gripping.LinearVelocity.Dot(gripper.ropeDir);
+				if (ropeSpeed > 0f)
+				{
+					gripping.ApplyForce(force, grabPoint - gripper.currentlyGripping.GlobalTransform.Origin);
+					v -= gripper.ropeDir * ropeSpeed * 0.5f;
+				}
+			}
+			else
+			{
+				//gripping.RemoveGripper(gripper);
+			}
+
+			Velocity = v;
+		}
+	}
+	private void HoldingStatic(Masterhand gripper, float delta)
+	{
+		// Posiion of gripping hand to act as a rope on player
+		// U = 1/2 kx^2
+		float k = 400;
+		float cap = 1.5f;
+		float equilibrium = 1;
+
+		Vector3 toPlayer = (gripper.GetParent() as Marker3D).GlobalPosition - gripper.GlobalPosition;
+		float distance = toPlayer.Length();
+
+		if (distance > equilibrium)
+		{
+			gripper.ropeDir = toPlayer.Normalized();
+			Vector3 v = Velocity;
+
+			float ropeSpeed = v.Dot(gripper.ropeDir);
+
+			float stretch = distance - equilibrium;
+			if (stretch > 0f && IsOnFloor())
+			{
+				v -= gripper.ropeDir * (float) Math.Pow(stretch, 2) * k * 0.5f * delta;
+			}
+
+			if (distance > cap)
+			{
+				if (ropeSpeed > 0f) v -= gripper.ropeDir * ropeSpeed;
+			}
+
+			Velocity = v;
+		}
+	}
+	
+	private void HandleHeadRotation()
+	{
+
+		if (InvertCameraXAxis)
+		{
+			Head.RotationDegrees = new Vector3(Head.RotationDegrees.X, Head.RotationDegrees.Y - (MouseInput.X * (float)MouseSensitivity * -1), Head.RotationDegrees.Z);
+		}
+		else
+		{
+			Head.RotationDegrees = new Vector3(Head.RotationDegrees.X, Head.RotationDegrees.Y - (MouseInput.X * (float)MouseSensitivity), Head.RotationDegrees.Z);
+		}
+
+		if (InvertCameraYAxis)
+		{
+			Head.RotationDegrees = new Vector3(Head.RotationDegrees.X - (MouseInput.Y * (float)MouseSensitivity * -1), Head.RotationDegrees.Y, Head.RotationDegrees.Z);
+		}
+		else
+		{
+			Head.RotationDegrees = new Vector3(Head.RotationDegrees.X - (MouseInput.Y * (float)MouseSensitivity), Head.RotationDegrees.Y, Head.RotationDegrees.Z);
+		}
+
+		if (ControllerSupport)
+		{
+			Vector2 controllerViewRotation = Input.GetVector(
+				ControllerControls["look-down"], ControllerControls["look-up"],
+				ControllerControls["look-right"], ControllerControls["look-left"]
+			) * (float)LookSensitivity;
+			if (InvertCameraXAxis)
+			{
+				Head.Rotation = new Vector3(Head.Rotation.X + (controllerViewRotation.X * -1), Head.Rotation.Y, Head.Rotation.Z);
+			}
+			else
+			{
+				Head.Rotation = new Vector3(Head.Rotation.X + controllerViewRotation.X, Head.Rotation.Y, Head.Rotation.Z);
+			}
+
+			if (InvertCameraYAxis)
+			{
+				Head.Rotation = new Vector3(Head.Rotation.X, Head.Rotation.Y + (controllerViewRotation.Y * -1), Head.Rotation.Z);
+			}
+			else
+			{
+				Head.Rotation = new Vector3(Head.Rotation.X, Head.Rotation.Y + controllerViewRotation.Y, Head.Rotation.Z);
+			}
+
+		}
+		MouseInput = Vector2.Zero;
+		Head.Rotation = new Vector3(
+			Mathf.Clamp(Head.Rotation.X, Mathf.DegToRad(-90), Mathf.DegToRad(90)),
+			Head.Rotation.Y,
+			Head.Rotation.Z
+		);
+	}
 
 #region input handling
 	public void HandleJumping()
@@ -344,14 +511,14 @@ public partial class PlayerController : CharacterBody3D
 		}
 		else
 		{
-			if (StrafeCoef > 0)
+			if (StrafeCoef > 0.0f)
 			{
 				if (MotionSmoothing)
 				{
 					Velocity = new Vector3(
 					(float)Mathf.Lerp(Velocity.X, direction.X * _speed, Acceleration * (float) delta * StrafeCoef),
 					Velocity.Y,
-					(float)Mathf.Lerp(Velocity.Z, direction.Z * _speed, Acceleration * (float) delta));
+					(float)Mathf.Lerp(Velocity.Z, direction.Z * _speed, Acceleration * (float) delta * StrafeCoef));
 				}
 				else
 				{
@@ -359,62 +526,8 @@ public partial class PlayerController : CharacterBody3D
 				}
 			}
 		}
+		GripperClamps((float) delta);
 		MoveAndSlide();
-	}
-
-
-	public void HandleHeadRotation()
-	{
-		if (InvertCameraXAxis)
-		{
-			Head.RotationDegrees = new Vector3(Head.RotationDegrees.X, Head.RotationDegrees.Y - (MouseInput.X * (float) MouseSensitivity * -1), Head.RotationDegrees.Z);
-		}
-		else
-		{
-            Head.RotationDegrees = new Vector3(Head.RotationDegrees.X, Head.RotationDegrees.Y - (MouseInput.X * (float) MouseSensitivity), Head.RotationDegrees.Z);
-		}
-
-		if (InvertCameraYAxis)
-		{
-            Head.RotationDegrees = new Vector3(Head.RotationDegrees.X - (MouseInput.Y * (float) MouseSensitivity * -1), Head.RotationDegrees.Y, Head.RotationDegrees.Z);
-		}
-		else
-		{
-            Head.RotationDegrees = new Vector3(Head.RotationDegrees.X - (MouseInput.Y * (float) MouseSensitivity), Head.RotationDegrees.Y, Head.RotationDegrees.Z);
-		}
-
-		if (ControllerSupport)
-		{
-            Vector2 controllerViewRotation = Input.GetVector(
-                ControllerControls["look-down"], ControllerControls["look-up"],
-                ControllerControls["look-right"], ControllerControls["look-left"]
-            ) * (float) LookSensitivity;
-			if (InvertCameraXAxis)
-			{
-                Head.Rotation = new Vector3(Head.Rotation.X + (controllerViewRotation.X * -1), Head.Rotation.Y, Head.Rotation.Z);
-			}
-			else
-			{
-                Head.Rotation = new Vector3(Head.Rotation.X + controllerViewRotation.X, Head.Rotation.Y, Head.Rotation.Z);
-			}
-
-			if (InvertCameraYAxis)
-			{
-                Head.Rotation = new Vector3(Head.Rotation.X, Head.Rotation.Y + (controllerViewRotation.Y * -1), Head.Rotation.Z);
-			}
-			else
-			{
-                Head.Rotation = new Vector3(Head.Rotation.X, Head.Rotation.Y + controllerViewRotation.Y, Head.Rotation.Z);
-			}
-
-		}
-		MouseInput = Vector2.Zero;
-        Head.Rotation = new Vector3(
-            Mathf.Clamp(Head.Rotation.X, Mathf.DegToRad(-90), Mathf.DegToRad(90)),
-            Head.Rotation.Y,
-            Head.Rotation.Z
-        );
-
 	}
 
     public void CheckControls()
@@ -643,6 +756,7 @@ public partial class PlayerController : CharacterBody3D
 			Vector3 facingDirection = Camera.GlobalTransform.Basis.X;
 			Vector2 facingDirection2D = new Vector2(facingDirection.X, facingDirection.Z).Normalized();
 			Vector2 velocity2D = new Vector2(Velocity.X, Velocity.Z).Normalized();
+			if (RightGripper.IsGripping || LeftGripper.IsGripping) return;
 
 			// Compares velocity direction against the camera direction (via dot product) to determine which landing animation to play.
 			int sideLanded = Mathf.RoundToInt(velocity2D.Dot(facingDirection2D));
